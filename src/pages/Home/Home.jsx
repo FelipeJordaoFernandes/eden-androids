@@ -38,7 +38,11 @@ const categories = [
   },
 ]
 
-const featuredProductNames = ['Eden H-01', 'Eden S-20', 'Eden L-99']
+const featuredProductNames = [
+  'Eden Home H-01',
+  'Eden Sentinel S-20',
+  'Eden Luxe L-99',
+]
 
 const featuredModels = products.filter((product) =>
   featuredProductNames.includes(product.name),

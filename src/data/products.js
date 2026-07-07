@@ -1,7 +1,7 @@
 export const products = [
   {
     id: 1,
-    name: 'Eden H-01',
+    name: 'Eden Home H-01',
     line: 'Habitat Series',
     category: 'Doméstico',
     type: 'Assistente residencial',
@@ -15,11 +15,11 @@ export const products = [
     autonomyLevel: 'Assistida',
     battery: '42 horas',
     warranty: '24 meses',
-    image: '/images/products/eden-h01.png',
+    image: '/images/products/eden-home-h01.png',
     shortDescription:
       'Assistente residencial para organização, conforto e rotinas inteligentes.',
     description:
-      'O Eden H-01 foi projetado para apoiar casas conectadas, organizar tarefas diárias, monitorar ambientes internos e oferecer uma experiência de assistência discreta para famílias e moradores individuais.',
+      'O Eden Home H-01 foi projetado para apoiar casas conectadas, organizar tarefas diárias, monitorar ambientes internos e oferecer uma experiência de assistência discreta para famílias e moradores individuais.',
     functions: [
       'Gestão de rotinas domésticas',
       'Monitoramento ambiental interno',
@@ -37,7 +37,7 @@ export const products = [
   },
   {
     id: 2,
-    name: 'Eden S-20',
+    name: 'Eden Sentinel S-20',
     line: 'Sentinel Series',
     category: 'Segurança',
     type: 'Vigilante patrimonial',
@@ -51,11 +51,11 @@ export const products = [
     autonomyLevel: 'Supervisionada',
     battery: '36 horas',
     warranty: '36 meses',
-    image: '/images/products/eden-s20.png',
+    image: '/images/products/eden-sentinel-s20.png',
     shortDescription:
       'Unidade preventiva para vigilância privada, resposta rápida e contenção não letal.',
     description:
-      'O Eden S-20 combina sensores de risco, patrulhamento programável e protocolos de contenção não letal para condomínios, empresas e perímetros privados com supervisão humana obrigatória.',
+      'O Eden Sentinel S-20 combina sensores de risco, patrulhamento programável e protocolos de contenção não letal para condomínios, empresas e perímetros privados com supervisão humana obrigatória.',
     functions: [
       'Patrulhamento de áreas privadas',
       'Análise preventiva de risco',
@@ -73,7 +73,7 @@ export const products = [
   },
   {
     id: 3,
-    name: 'Eden M-12',
+    name: 'Eden Care M-12',
     line: 'MedCare Series',
     category: 'Assistência Médica',
     type: 'Cuidador clínico',
@@ -86,11 +86,11 @@ export const products = [
     autonomyLevel: 'Clínica assistida',
     battery: '30 horas',
     warranty: '36 meses',
-    image: '/images/products/eden-m12.png',
+    image: '/images/products/eden-care-m12.png',
     shortDescription:
       'Apoio clínico supervisionado para cuidado, mobilidade e triagem básica.',
     description:
-      'O Eden M-12 atua como apoio técnico em ambientes de cuidado, auxiliando profissionais humanos com triagem inicial, acompanhamento de sinais, mobilidade assistida e organização de protocolos não invasivos.',
+      'O Eden Care M-12 atua como apoio técnico em ambientes de cuidado, auxiliando profissionais humanos com triagem inicial, acompanhamento de sinais, mobilidade assistida e organização de protocolos não invasivos.',
     functions: [
       'Triagem básica supervisionada',
       'Apoio à mobilidade',
@@ -108,7 +108,7 @@ export const products = [
   },
   {
     id: 4,
-    name: 'Eden T-08',
+    name: 'Eden Tutor T-08',
     line: 'Tutor Series',
     category: 'Educação',
     type: 'Tutor educacional',
@@ -122,11 +122,11 @@ export const products = [
     autonomyLevel: 'Pedagógica',
     battery: '40 horas',
     warranty: '24 meses',
-    image: '/images/products/eden-t08.png',
+    image: '/images/products/eden-tutor-t08.png',
     shortDescription:
       'Tutor adaptativo para escolas, laboratórios e aprendizagem individual.',
     description:
-      'O Eden T-08 oferece suporte educacional com planos de estudo adaptativos, interação multimodal e acompanhamento de progresso para ambientes escolares, treinamentos corporativos e aprendizado pessoal.',
+      'O Eden Tutor T-08 oferece suporte educacional com planos de estudo adaptativos, interação multimodal e acompanhamento de progresso para ambientes escolares, treinamentos corporativos e aprendizado pessoal.',
     functions: [
       'Tutoria personalizada',
       'Acompanhamento de progresso',
@@ -144,7 +144,7 @@ export const products = [
   },
   {
     id: 5,
-    name: 'Eden C-15',
+    name: 'Eden Social C-15',
     line: 'Companion Series',
     category: 'Companhia',
     type: 'Companheiro social',
@@ -157,11 +157,11 @@ export const products = [
     autonomyLevel: 'Interação social',
     battery: '38 horas',
     warranty: '24 meses',
-    image: '/images/products/eden-c15.png',
+    image: '/images/products/eden-social-c15.png',
     shortDescription:
       'Presença social calibrada para companhia, escuta e bem-estar cotidiano.',
     description:
-      'O Eden C-15 foi desenvolvido para interação social responsável, com foco em companhia, conversas assistidas, lembretes de rotina e presença em ambientes residenciais ou institucionais.',
+      'O Eden Social C-15 foi desenvolvido para interação social responsável, com foco em companhia, conversas assistidas, lembretes de rotina e presença em ambientes residenciais ou institucionais.',
     functions: [
       'Conversação contextual',
       'Lembretes de rotina',
@@ -179,7 +179,7 @@ export const products = [
   },
   {
     id: 6,
-    name: 'Eden I-70',
+    name: 'Eden Forge I-70',
     line: 'Industry Series',
     category: 'Industrial',
     type: 'Operador industrial',
@@ -192,11 +192,11 @@ export const products = [
     autonomyLevel: 'Operacional',
     battery: '28 horas',
     warranty: '48 meses',
-    image: '/images/products/eden-i70.png',
+    image: '/images/products/eden-forge-i70.png',
     shortDescription:
       'Força operacional para linhas produtivas, inspeção e ambientes críticos.',
     description:
-      'O Eden I-70 atende operações industriais com manipulação de carga, inspeção de equipamentos, apoio logístico e execução de rotinas repetitivas em áreas controladas.',
+      'O Eden Forge I-70 atende operações industriais com manipulação de carga, inspeção de equipamentos, apoio logístico e execução de rotinas repetitivas em áreas controladas.',
     functions: [
       'Manipulação de cargas moderadas',
       'Inspeção operacional',
@@ -214,7 +214,7 @@ export const products = [
   },
   {
     id: 7,
-    name: 'Eden L-99',
+    name: 'Eden Luxe L-99',
     line: 'Luxe Series',
     category: 'Luxo',
     type: 'Concierge premium',
@@ -228,11 +228,11 @@ export const products = [
     autonomyLevel: 'Concierge avançada',
     battery: '44 horas',
     warranty: '48 meses',
-    image: '/images/products/eden-l99.png',
+    image: '/images/products/eden-luxe-l99.png',
     shortDescription:
       'Modelo executivo com acabamento premium e concierge sintético avançado.',
     description:
-      'O Eden L-99 une acabamento refinado, presença social sofisticada e recursos de concierge para residências de alto padrão, recepções privadas e ambientes executivos.',
+      'O Eden Luxe L-99 une acabamento refinado, presença social sofisticada e recursos de concierge para residências de alto padrão, recepções privadas e ambientes executivos.',
     functions: [
       'Concierge residencial e executivo',
       'Curadoria de agenda e recepção',
@@ -250,7 +250,7 @@ export const products = [
   },
   {
     id: 8,
-    name: 'Eden B-30',
+    name: 'Eden Exec B-30',
     line: 'Business Series',
     category: 'Corporativo',
     type: 'Assistente executivo',
@@ -264,11 +264,11 @@ export const products = [
     autonomyLevel: 'Corporativa',
     battery: '34 horas',
     warranty: '36 meses',
-    image: '/images/products/eden-b30.png',
+    image: '/images/products/eden-exec-b30.png',
     shortDescription:
       'Automação corporativa para recepção, logística interna e suporte a equipes.',
     description:
-      'O Eden B-30 oferece suporte para empresas com atendimento inicial, organização operacional, apoio em reuniões, logística interna e integração com fluxos corporativos.',
+      'O Eden Exec B-30 oferece suporte para empresas com atendimento inicial, organização operacional, apoio em reuniões, logística interna e integração com fluxos corporativos.',
     functions: [
       'Recepção empresarial',
       'Apoio a reuniões',
@@ -283,5 +283,549 @@ export const products = [
     },
     ethicalNotice:
       'Dados corporativos devem permanecer em ambientes autorizados, com trilhas de auditoria e permissões controladas.',
+  },
+  {
+    id: 9,
+    name: 'Eden Nanny H-04',
+    line: 'Habitat Care Series',
+    category: 'Doméstico',
+    type: 'Babá',
+    specialty: 'Cuidado infantil, rotina familiar e supervisão doméstica',
+    modelCode: 'EN-H04',
+    price: 68400,
+    stock: 8,
+    rating: 4.7,
+    reviews: 86,
+    autonomyLevel: 'Supervisionada',
+    battery: '39 horas',
+    warranty: '24 meses',
+    image: '/images/products/eden-nanny-h04.png',
+    shortDescription:
+      'Apoio doméstico para cuidado infantil, agendas familiares e supervisão leve.',
+    description:
+      'O Eden Nanny H-04 auxilia famílias em rotinas infantis, lembretes, atividades educativas leves e monitoramento de ambientes, sempre com supervisão adulta e limites de privacidade configuráveis.',
+    functions: [
+      'Apoio em rotinas infantis',
+      'Lembretes de horários e cuidados',
+      'Monitoramento doméstico supervisionado',
+    ],
+    specs: {
+      Estrutura: 'Revestimento seguro de baixa temperatura',
+      Processador: 'Eden Neural Core Family',
+      Conectividade: 'Rede local segura e modo infantil',
+      Sensores: 'Presença, áudio direcional e visão ambiente',
+    },
+    ethicalNotice:
+      'Não substitui responsáveis legais e deve operar com supervisão humana, consentimento familiar e limites de acesso configurados.',
+  },
+  {
+    id: 10,
+    name: 'Eden Chef H-07',
+    line: 'Culinary Series',
+    category: 'Doméstico',
+    type: 'Cozinheiro',
+    specialty: 'Preparo de refeições, organização da cozinha e cardápios domésticos',
+    modelCode: 'EN-H07',
+    price: 72900,
+    stock: 10,
+    rating: 4.6,
+    reviews: 73,
+    autonomyLevel: 'Culinária assistida',
+    battery: '34 horas',
+    warranty: '24 meses',
+    image: '/images/products/eden-chef-h07.png',
+    shortDescription:
+      'Unidade doméstica para preparo assistido de refeições e organização culinária.',
+    description:
+      'O Eden Chef H-07 combina manipulação precisa, organização de ingredientes e execução de receitas programadas para auxiliar cozinhas residenciais com segurança térmica e sanitização automatizada.',
+    functions: [
+      'Preparo assistido de receitas',
+      'Organização de ingredientes',
+      'Controle de segurança térmica',
+    ],
+    specs: {
+      Estrutura: 'Braços de precisão com revestimento sanitizável',
+      Processador: 'Eden Neural Core Culinary',
+      Conectividade: 'Wi-Fi 7 e biblioteca local de receitas',
+      Sensores: 'Temperatura, peso, proximidade e visão de bancada',
+    },
+    ethicalNotice:
+      'A operação culinária exige ingredientes autorizados, manutenção sanitária e supervisão em ambientes com crianças.',
+  },
+  {
+    id: 11,
+    name: 'Eden Gate S-12',
+    line: 'Access Series',
+    category: 'Segurança',
+    type: 'Porteiro',
+    specialty: 'Controle de acesso, recepção segura e triagem de visitantes',
+    modelCode: 'EN-S12',
+    price: 64100,
+    stock: 14,
+    rating: 4.5,
+    reviews: 112,
+    autonomyLevel: 'Controle de acesso',
+    battery: '44 horas',
+    warranty: '24 meses',
+    image: '/images/products/eden-gate-s12.png',
+    shortDescription:
+      'Porteiro sintético para recepção, identificação e controle de acesso.',
+    description:
+      'O Eden Gate S-12 atende portarias residenciais e corporativas com identificação de visitantes, registro de entradas, comunicação com responsáveis e protocolos de acesso configuráveis.',
+    functions: [
+      'Triagem de visitantes',
+      'Registro de entradas e saídas',
+      'Comunicação com responsáveis',
+    ],
+    specs: {
+      Estrutura: 'Estrutura compacta para áreas de recepção',
+      Processador: 'Eden Neural Core Access',
+      Conectividade: 'Rede predial e autenticação local',
+      Sensores: 'Câmera, áudio direcional e leitura de credenciais',
+    },
+    ethicalNotice:
+      'O controle de acesso deve respeitar políticas de privacidade, consentimento e legislação local de monitoramento.',
+  },
+  {
+    id: 12,
+    name: 'Eden Shield S-30',
+    line: 'Guardian Series',
+    category: 'Segurança',
+    type: 'Segurança pessoal',
+    specialty: 'Acompanhamento executivo, rotas seguras e proteção preventiva',
+    modelCode: 'EN-S30',
+    price: 132000,
+    stock: 5,
+    rating: 4.8,
+    reviews: 57,
+    autonomyLevel: 'Escolta supervisionada',
+    battery: '32 horas',
+    warranty: '36 meses',
+    image: '/images/products/eden-shield-s30.png',
+    shortDescription:
+      'Unidade de proteção pessoal para acompanhamento preventivo e rotas seguras.',
+    description:
+      'O Eden Shield S-30 atua em acompanhamento pessoal autorizado, leitura de risco ambiental e comunicação preventiva, mantendo protocolos de não agressão e escalonamento humano.',
+    functions: [
+      'Acompanhamento pessoal autorizado',
+      'Análise de rota e risco',
+      'Comunicação preventiva de incidentes',
+    ],
+    specs: {
+      Estrutura: 'Chassi de mobilidade rápida com proteção leve',
+      Processador: 'Eden Neural Core Guardian',
+      Conectividade: 'Rede móvel criptografada e canal de emergência',
+      Sensores: 'Lidar, visão noturna, áudio e proximidade',
+    },
+    ethicalNotice:
+      'Proteção pessoal limitada a ações preventivas, sem uso letal e com logs auditáveis de operação.',
+  },
+  {
+    id: 13,
+    name: 'Eden Ward M-18',
+    line: 'Hospital Support Series',
+    category: 'Assistência Médica',
+    type: 'Apoio hospitalar',
+    specialty: 'Apoio a enfermarias, transporte interno e organização clínica',
+    modelCode: 'EN-M18',
+    price: 141500,
+    stock: 6,
+    rating: 4.6,
+    reviews: 62,
+    autonomyLevel: 'Hospitalar assistida',
+    battery: '26 horas',
+    warranty: '36 meses',
+    image: '/images/products/eden-ward-m18.png',
+    shortDescription:
+      'Suporte hospitalar para fluxos internos, materiais e equipes clínicas.',
+    description:
+      'O Eden Ward M-18 foi desenvolvido para ambientes hospitalares, auxiliando no transporte de materiais, organização de leitos, apoio não invasivo e comunicação entre setores autorizados.',
+    functions: [
+      'Transporte interno de materiais',
+      'Apoio em enfermarias',
+      'Organização de rotinas clínicas',
+    ],
+    specs: {
+      Estrutura: 'Revestimento hospitalar de fácil sanitização',
+      Processador: 'Eden Neural Core Ward',
+      Conectividade: 'Rede clínica segmentada e autenticação',
+      Sensores: 'Proximidade, peso, temperatura e leitura ambiental',
+    },
+    ethicalNotice:
+      'Uso restrito a protocolos hospitalares autorizados, sem tomada autônoma de decisões clínicas.',
+  },
+  {
+    id: 14,
+    name: 'Eden Vital M-21',
+    line: 'Vital Monitor Series',
+    category: 'Assistência Médica',
+    type: 'Monitoramento domiciliar',
+    specialty: 'Acompanhamento remoto, alertas preventivos e rotina de cuidado',
+    modelCode: 'EN-M21',
+    price: 98300,
+    stock: 9,
+    rating: 4.5,
+    reviews: 84,
+    autonomyLevel: 'Domiciliar monitorada',
+    battery: '37 horas',
+    warranty: '24 meses',
+    image: '/images/products/eden-vital-m21.png',
+    shortDescription:
+      'Monitoramento domiciliar para rotina de cuidado e alertas preventivos.',
+    description:
+      'O Eden Vital M-21 apoia residências com acompanhamento de rotina, lembretes de cuidado, alertas preventivos e registros para profissionais ou familiares autorizados.',
+    functions: [
+      'Monitoramento de rotina domiciliar',
+      'Alertas preventivos configuráveis',
+      'Relatórios para contatos autorizados',
+    ],
+    specs: {
+      Estrutura: 'Corpo compacto para ambientes residenciais',
+      Processador: 'Eden Neural Core Vital',
+      Conectividade: 'Rede privada e sincronização segura',
+      Sensores: 'Presença, áudio, temperatura e leitura postural',
+    },
+    ethicalNotice:
+      'Dados de cuidado exigem consentimento explícito e compartilhamento apenas com pessoas autorizadas.',
+  },
+  {
+    id: 15,
+    name: 'Eden Lingua T-14',
+    line: 'Language Series',
+    category: 'Educação',
+    type: 'Professor de idiomas',
+    specialty: 'Conversação, pronúncia, imersão linguística e revisão guiada',
+    modelCode: 'EN-T14',
+    price: 62400,
+    stock: 13,
+    rating: 4.7,
+    reviews: 119,
+    autonomyLevel: 'Linguística assistida',
+    battery: '41 horas',
+    warranty: '24 meses',
+    image: '/images/products/eden-lingua-t14.png',
+    shortDescription:
+      'Professor de idiomas para prática conversacional e trilhas personalizadas.',
+    description:
+      'O Eden Lingua T-14 conduz sessões de conversação, exercícios de pronúncia, revisão de vocabulário e simulações de contexto para estudantes e equipes internacionais.',
+    functions: [
+      'Conversação em idiomas',
+      'Correção de pronúncia',
+      'Planos de estudo personalizados',
+    ],
+    specs: {
+      Estrutura: 'Estrutura leve para salas e escritórios',
+      Processador: 'Eden Neural Core Lingua',
+      Conectividade: 'Rede educacional e biblioteca offline',
+      Sensores: 'Áudio direcional, presença e leitura de material',
+    },
+    ethicalNotice:
+      'Uso educacional deve preservar dados de desempenho e evitar exposição indevida de gravações.',
+  },
+  {
+    id: 16,
+    name: 'Eden Mentor T-22',
+    line: 'Technical Mentor Series',
+    category: 'Educação',
+    type: 'Instrutor técnico',
+    specialty: 'Treinamento profissional, laboratórios e simulações operacionais',
+    modelCode: 'EN-T22',
+    price: 88900,
+    stock: 7,
+    rating: 4.8,
+    reviews: 66,
+    autonomyLevel: 'Instrucional',
+    battery: '35 horas',
+    warranty: '36 meses',
+    image: '/images/products/eden-mentor-t22.png',
+    shortDescription:
+      'Instrutor técnico para treinamentos, oficinas e laboratórios supervisionados.',
+    description:
+      'O Eden Mentor T-22 apoia treinamentos técnicos com demonstrações, simulações controladas, avaliação de procedimentos e orientação em laboratórios corporativos ou educacionais.',
+    functions: [
+      'Demonstrações técnicas',
+      'Simulações de procedimento',
+      'Avaliação de treinamento',
+    ],
+    specs: {
+      Estrutura: 'Chassi modular para ambientes de laboratório',
+      Processador: 'Eden Neural Core Mentor',
+      Conectividade: 'Rede local e módulos de treinamento',
+      Sensores: 'Visão técnica, proximidade e leitura de ferramentas',
+    },
+    ethicalNotice:
+      'Treinamentos devem ocorrer com supervisão humana e limites de segurança operacional definidos.',
+  },
+  {
+    id: 17,
+    name: 'Eden Persona C-19',
+    line: 'Personal Assist Series',
+    category: 'Companhia',
+    type: 'Assistente pessoal',
+    specialty: 'Agenda pessoal, lembretes, organização e suporte diário',
+    modelCode: 'EN-C19',
+    price: 81200,
+    stock: 10,
+    rating: 4.6,
+    reviews: 79,
+    autonomyLevel: 'Pessoal assistida',
+    battery: '40 horas',
+    warranty: '24 meses',
+    image: '/images/products/eden-persona-c19.png',
+    shortDescription:
+      'Assistente pessoal para agenda, organização cotidiana e suporte discreto.',
+    description:
+      'O Eden Persona C-19 organiza agendas, lembretes, deslocamentos e pequenas rotinas pessoais com interação discreta e permissões configuráveis para cada usuário.',
+    functions: [
+      'Gestão de agenda pessoal',
+      'Lembretes e planejamento',
+      'Organização de rotinas individuais',
+    ],
+    specs: {
+      Estrutura: 'Corpo compacto com operação silenciosa',
+      Processador: 'Eden Neural Core Persona',
+      Conectividade: 'Rede pessoal privada e sincronização seletiva',
+      Sensores: 'Presença, áudio direcional e leitura contextual',
+    },
+    ethicalNotice:
+      'Informações pessoais devem ser tratadas com consentimento, criptografia e permissões mínimas necessárias.',
+  },
+  {
+    id: 18,
+    name: 'Eden Access C-24',
+    line: 'Accessibility Series',
+    category: 'Companhia',
+    type: 'Guia de acessibilidade',
+    specialty: 'Orientação assistida, mobilidade urbana e suporte inclusivo',
+    modelCode: 'EN-C24',
+    price: 93400,
+    stock: 6,
+    rating: 4.9,
+    reviews: 52,
+    autonomyLevel: 'Acessibilidade assistida',
+    battery: '33 horas',
+    warranty: '36 meses',
+    image: '/images/products/eden-access-c24.png',
+    shortDescription:
+      'Guia sintético para orientação, mobilidade assistida e suporte inclusivo.',
+    description:
+      'O Eden Access C-24 apoia mobilidade assistida em ambientes internos e externos, com orientação por voz, leitura ambiental e rotas seguras para pessoas autorizadas.',
+    functions: [
+      'Orientação por voz',
+      'Leitura de obstáculos',
+      'Apoio em rotas acessíveis',
+    ],
+    specs: {
+      Estrutura: 'Chassi leve com articulações responsivas',
+      Processador: 'Eden Neural Core AccessCare',
+      Conectividade: 'Rede móvel segura e mapas locais',
+      Sensores: 'Lidar, áudio espacial, visão e proximidade',
+    },
+    ethicalNotice:
+      'Apoio de acessibilidade deve respeitar autonomia individual, consentimento e preferências configuradas.',
+  },
+  {
+    id: 19,
+    name: 'Eden Inspect I-44',
+    line: 'Inspection Series',
+    category: 'Industrial',
+    type: 'Inspetor técnico',
+    specialty: 'Auditoria de equipamentos, leitura técnica e prevenção de falhas',
+    modelCode: 'EN-I44',
+    price: 128700,
+    stock: 5,
+    rating: 4.8,
+    reviews: 49,
+    autonomyLevel: 'Inspeção técnica',
+    battery: '31 horas',
+    warranty: '48 meses',
+    image: '/images/products/eden-inspect-i44.png',
+    shortDescription:
+      'Inspetor industrial para checagens técnicas, anomalias e manutenção preventiva.',
+    description:
+      'O Eden Inspect I-44 realiza inspeções visuais e sensoriais em equipamentos, identifica anomalias e produz relatórios técnicos para equipes de manutenção autorizadas.',
+    functions: [
+      'Inspeção de equipamentos',
+      'Detecção de anomalias',
+      'Relatórios de manutenção preventiva',
+    ],
+    specs: {
+      Estrutura: 'Estrutura reforçada para áreas técnicas',
+      Processador: 'Eden Neural Core Inspect',
+      Conectividade: 'Telemetria industrial e rede isolada',
+      Sensores: 'Visão técnica, vibração, temperatura e pressão',
+    },
+    ethicalNotice:
+      'Relatórios técnicos devem ser revisados por profissionais responsáveis antes de ações críticas.',
+  },
+  {
+    id: 20,
+    name: 'Eden Flow I-55',
+    line: 'Logistics Series',
+    category: 'Industrial',
+    type: 'Logística interna',
+    specialty: 'Movimentação interna, inventário e distribuição operacional',
+    modelCode: 'EN-I55',
+    price: 117300,
+    stock: 8,
+    rating: 4.5,
+    reviews: 68,
+    autonomyLevel: 'Logística assistida',
+    battery: '36 horas',
+    warranty: '36 meses',
+    image: '/images/products/eden-flow-i55.png',
+    shortDescription:
+      'Unidade logística para inventário, movimentação interna e distribuição.',
+    description:
+      'O Eden Flow I-55 auxilia centros operacionais com transporte interno, conferência de inventário, roteirização e distribuição de materiais em ambientes controlados.',
+    functions: [
+      'Transporte interno de materiais',
+      'Conferência de inventário',
+      'Roteirização operacional',
+    ],
+    specs: {
+      Estrutura: 'Chassi modular com plataforma de carga',
+      Processador: 'Eden Neural Core Flow',
+      Conectividade: 'Rede logística e integração com inventário',
+      Sensores: 'Peso, proximidade, visão e localização interna',
+    },
+    ethicalNotice:
+      'Rotas logísticas devem respeitar áreas restritas, sinalização de segurança e supervisão operacional.',
+  },
+  {
+    id: 21,
+    name: 'Eden Manor L-42',
+    line: 'Estate Series',
+    category: 'Luxo',
+    type: 'Mordomo tecnológico',
+    specialty: 'Gestão residencial premium, hospitalidade e automação de alto padrão',
+    modelCode: 'EN-L42',
+    price: 171400,
+    stock: 4,
+    rating: 4.8,
+    reviews: 36,
+    autonomyLevel: 'Residencial premium',
+    battery: '43 horas',
+    warranty: '48 meses',
+    image: '/images/products/eden-manor-l42.png',
+    shortDescription:
+      'Mordomo tecnológico para residências premium, hospitalidade e automação.',
+    description:
+      'O Eden Manor L-42 coordena ambientes residenciais de alto padrão, recepção de convidados, rotinas de hospitalidade e integração com sistemas de automação premium.',
+    functions: [
+      'Gestão de hospitalidade residencial',
+      'Recepção de convidados',
+      'Coordenação de ambientes premium',
+    ],
+    specs: {
+      Estrutura: 'Acabamento premium com operação silenciosa',
+      Processador: 'Eden Neural Core Manor',
+      Conectividade: 'Automação residencial privada e biometria local',
+      Sensores: 'Presença, áudio espacial e visão contextual',
+    },
+    ethicalNotice:
+      'Interações em ambientes privados devem respeitar consentimento de convidados e modos de privacidade.',
+  },
+  {
+    id: 22,
+    name: 'Eden Aura L-77',
+    line: 'Lifestyle Series',
+    category: 'Luxo',
+    type: 'Consultor de lifestyle',
+    specialty: 'Curadoria pessoal, agenda social, bem-estar e experiências premium',
+    modelCode: 'EN-L77',
+    price: 164900,
+    stock: 5,
+    rating: 4.7,
+    reviews: 44,
+    autonomyLevel: 'Consultiva',
+    battery: '39 horas',
+    warranty: '36 meses',
+    image: '/images/products/eden-aura-l77.png',
+    shortDescription:
+      'Consultor sintético para curadoria pessoal, agenda social e experiências.',
+    description:
+      'O Eden Aura L-77 apoia curadoria de rotina, eventos, bem-estar e experiências personalizadas com foco em discrição, organização e preferências individuais.',
+    functions: [
+      'Curadoria de agenda social',
+      'Recomendações de experiências',
+      'Organização de preferências pessoais',
+    ],
+    specs: {
+      Estrutura: 'Estrutura elegante com acabamento personalizável',
+      Processador: 'Eden Neural Core Aura',
+      Conectividade: 'Rede privada e perfis locais de preferência',
+      Sensores: 'Leitura ambiente, áudio direcional e presença',
+    },
+    ethicalNotice:
+      'Preferências pessoais devem ser armazenadas com consentimento e nunca compartilhadas sem autorização.',
+  },
+  {
+    id: 23,
+    name: 'Eden Desk B-16',
+    line: 'Reception Series',
+    category: 'Corporativo',
+    type: 'Recepcionista corporativo',
+    specialty: 'Recepção, identificação de visitantes e orientação institucional',
+    modelCode: 'EN-B16',
+    price: 78300,
+    stock: 16,
+    rating: 4.5,
+    reviews: 104,
+    autonomyLevel: 'Atendimento assistido',
+    battery: '42 horas',
+    warranty: '24 meses',
+    image: '/images/products/eden-desk-b16.png',
+    shortDescription:
+      'Recepcionista corporativo para visitantes, agenda e orientação inicial.',
+    description:
+      'O Eden Desk B-16 atua em recepções corporativas com identificação de visitantes, direcionamento para setores, apoio a agendas e comunicação com equipes internas.',
+    functions: [
+      'Recepção de visitantes',
+      'Direcionamento institucional',
+      'Comunicação com equipes internas',
+    ],
+    specs: {
+      Estrutura: 'Corpo compacto para balcões e halls',
+      Processador: 'Eden Neural Core Desk',
+      Conectividade: 'Rede corporativa e agenda integrada',
+      Sensores: 'Visão frontal, áudio direcional e leitura de presença',
+    },
+    ethicalNotice:
+      'Atendimento corporativo deve informar a natureza sintética da interação e respeitar dados de visitantes.',
+  },
+  {
+    id: 24,
+    name: 'Eden Service B-28',
+    line: 'Customer Ops Series',
+    category: 'Corporativo',
+    type: 'Atendimento empresarial',
+    specialty: 'Suporte ao cliente, triagem de demandas e orientação operacional',
+    modelCode: 'EN-B28',
+    price: 96400,
+    stock: 12,
+    rating: 4.6,
+    reviews: 91,
+    autonomyLevel: 'Atendimento corporativo',
+    battery: '38 horas',
+    warranty: '36 meses',
+    image: '/images/products/eden-service-b28.png',
+    shortDescription:
+      'Unidade de atendimento empresarial para triagem, suporte e orientação.',
+    description:
+      'O Eden Service B-28 apoia áreas de atendimento com triagem de demandas, orientação operacional, respostas padronizadas e encaminhamento para equipes humanas quando necessário.',
+    functions: [
+      'Triagem de solicitações',
+      'Orientação operacional',
+      'Encaminhamento para equipes humanas',
+    ],
+    specs: {
+      Estrutura: 'Estrutura de operação contínua para atendimento',
+      Processador: 'Eden Neural Core Service',
+      Conectividade: 'Rede corporativa e base de conhecimento local',
+      Sensores: 'Áudio direcional, visão de atendimento e presença',
+    },
+    ethicalNotice:
+      'Atendimentos devem registrar consentimento, preservar dados sensíveis e permitir escalonamento humano.',
   },
 ]
