@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import { products } from '../../data/products.js'
+import { formatCurrency } from '../../utils/formatCurrency.js'
 import './Home.css'
 
 const categories = [
@@ -36,29 +38,11 @@ const categories = [
   },
 ]
 
-const featuredModels = [
-  {
-    id: 1,
-    name: 'Eden H-01',
-    category: 'Doméstico',
-    price: 'R$ 48.900',
-    description: 'Assistente residencial para organização, conforto e rotina familiar.',
-  },
-  {
-    id: 2,
-    name: 'Eden S-20',
-    category: 'Segurança',
-    price: 'R$ 92.500',
-    description: 'Unidade tática preventiva para ambientes privados e empresariais.',
-  },
-  {
-    id: 3,
-    name: 'Eden L-99',
-    category: 'Luxo',
-    price: 'R$ 186.000',
-    description: 'Modelo executivo com interação social refinada e acabamento premium.',
-  },
-]
+const featuredProductNames = ['Eden H-01', 'Eden S-20', 'Eden L-99']
+
+const featuredModels = products.filter((product) =>
+  featuredProductNames.includes(product.name),
+)
 
 const benefits = [
   {
@@ -145,7 +129,7 @@ function Home() {
           <span className="home-eyebrow">Modelos em destaque</span>
           <h2>Primeiras unidades Eden</h2>
           <p>
-            Três modelos estáticos para iniciar a experiência visual do catálogo.
+            Três modelos selecionados do catálogo para apresentar as linhas Eden.
           </p>
         </div>
 
@@ -153,9 +137,10 @@ function Home() {
           {featuredModels.map((model) => (
             <article className="featured-card" key={model.id}>
               <span className="model-category">{model.category}</span>
+              <span className="model-type">{model.type}</span>
               <h3>{model.name}</h3>
-              <strong>{model.price}</strong>
-              <p>{model.description}</p>
+              <strong>{formatCurrency(model.price)}</strong>
+              <p>{model.shortDescription}</p>
               <Link className="details-link" to={`/product/${model.id}`}>
                 Ver detalhes
               </Link>

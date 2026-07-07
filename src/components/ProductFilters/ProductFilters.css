@@ -1,0 +1,120 @@
+.product-filters {
+  border: 1px solid rgba(126, 233, 255, 0.14);
+  border-radius: 8px;
+  background: rgba(18, 29, 40, 0.52);
+  padding: 18px;
+}
+
+.filters-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.filters-heading span {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.filters-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 38px;
+  padding: 8px 14px;
+}
+
+.filters-toggle::before {
+  content: '';
+  width: 14px;
+  height: 10px;
+  background:
+    linear-gradient(var(--accent-strong), var(--accent-strong)) 0 0 / 100% 2px,
+    linear-gradient(var(--accent-strong), var(--accent-strong)) 0 4px / 100% 2px,
+    linear-gradient(var(--accent-strong), var(--accent-strong)) 0 8px / 100% 2px;
+  background-repeat: no-repeat;
+}
+
+.filters-controls {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(180px, 260px) minmax(180px, 260px);
+  gap: 16px;
+}
+
+.filter-field {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-field span {
+  color: var(--accent-strong);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.filter-field input,
+.filter-field select {
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid rgba(126, 233, 255, 0.18);
+  border-radius: 8px;
+  background: rgba(7, 11, 16, 0.72);
+  color: var(--text);
+  padding: 0 14px;
+  outline: none;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.filter-field input:focus,
+.filter-field select:focus {
+  border-color: rgba(53, 223, 255, 0.68);
+  box-shadow: 0 0 0 3px rgba(53, 223, 255, 0.1);
+}
+
+.filter-field input::placeholder {
+  color: rgba(166, 180, 194, 0.68);
+}
+
+@media (max-width: 900px) {
+  .filters-controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .filter-field:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 620px) {
+  .product-filters {
+    position: relative;
+  }
+
+  .filters-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .filters-controls {
+    display: none;
+    grid-template-columns: 1fr;
+  }
+
+  .product-filters-open .filters-controls {
+    display: grid;
+  }
+
+  .filters-toggle {
+    width: 100%;
+  }
+}
