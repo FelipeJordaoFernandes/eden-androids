@@ -19,7 +19,9 @@ function ProductFilters({
         <button
           className="filters-toggle"
           type="button"
+          aria-label={isOpen ? 'Fechar filtros do catálogo' : 'Abrir filtros do catálogo'}
           aria-expanded={isOpen}
+          aria-controls="catalog-filter-controls"
           onClick={() => setIsOpen((currentValue) => !currentValue)}
         >
           Filtros
@@ -27,7 +29,11 @@ function ProductFilters({
         <span>Refine por função</span>
       </div>
 
-      <div className="filters-controls" aria-label="Filtros do catálogo">
+      <div
+        id="catalog-filter-controls"
+        className="filters-controls"
+        aria-label="Filtros do catálogo"
+      >
         <label className="filter-field">
           <span>Buscar</span>
           <input

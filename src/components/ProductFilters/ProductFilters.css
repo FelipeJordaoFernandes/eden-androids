@@ -20,7 +20,7 @@
 }
 
 .filters-toggle {
-  display: inline-flex;
+  display: none;
   align-items: center;
   justify-content: center;
   gap: 10px;
@@ -95,23 +95,38 @@
   }
 }
 
-@media (max-width: 620px) {
+@media (max-width: 767px) {
   .product-filters {
     position: relative;
+    padding: 14px;
   }
 
   .filters-heading {
-    align-items: flex-start;
-    flex-direction: column;
+    margin-bottom: 0;
+  }
+
+  .filters-heading span {
+    text-align: right;
   }
 
   .filters-controls {
     display: none;
     grid-template-columns: 1fr;
+    margin-top: 16px;
   }
 
   .product-filters-open .filters-controls {
     display: grid;
+  }
+
+  .filters-toggle {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 420px) {
+  .filters-heading span {
+    display: none;
   }
 
   .filters-toggle {
