@@ -22,6 +22,8 @@
 }
 
 .product-card-visual {
+  width: 100%;
+  aspect-ratio: 16 / 9;
   min-height: 150px;
   display: flex;
   align-items: flex-end;
@@ -68,6 +70,7 @@
   margin-bottom: 6px;
   color: var(--text);
   font-size: 1.35rem;
+  overflow-wrap: anywhere;
 }
 
 .product-line {
@@ -80,6 +83,7 @@
   color: var(--muted);
   font-size: 0.9rem;
   line-height: 1.55;
+  overflow-wrap: anywhere;
 }
 
 .product-specialty span {
@@ -96,7 +100,8 @@
   display: block;
   margin: 18px 0;
   color: var(--text);
-  font-size: 1.45rem;
+  font-size: clamp(1.25rem, 3vw, 1.45rem);
+  overflow-wrap: anywhere;
 }
 
 .product-spec-row {
@@ -104,6 +109,7 @@
 }
 
 .product-spec-row span {
+  max-width: 100%;
   border: 1px solid rgba(126, 233, 255, 0.14);
   border-radius: 999px;
   background: rgba(53, 223, 255, 0.08);
@@ -111,6 +117,7 @@
   padding: 7px 10px;
   font-size: 0.78rem;
   font-weight: 700;
+  overflow-wrap: anywhere;
 }
 
 .product-description {
@@ -135,4 +142,25 @@
 .product-details-link:hover {
   border-color: var(--text);
   color: var(--text);
+}
+
+@media (max-width: 767px) {
+  .product-card-body {
+    padding: clamp(16px, 5vw, 20px);
+  }
+
+  .product-card-meta {
+    margin-bottom: 14px;
+  }
+
+  .product-card h3 {
+    font-size: 1.25rem;
+  }
+
+  .product-details-link {
+    width: 100%;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: flex-end;
+  }
 }

@@ -20,7 +20,12 @@
 }
 
 .details-copy {
+  min-width: 0;
   align-self: center;
+}
+
+.details-copy h1 {
+  text-wrap: balance;
 }
 
 .details-eyebrow {
@@ -73,7 +78,8 @@
   display: block;
   margin-bottom: 22px;
   color: var(--accent-strong);
-  font-size: 2rem;
+  font-size: clamp(1.65rem, 4vw, 2rem);
+  overflow-wrap: anywhere;
 }
 
 .details-specialty {
@@ -150,7 +156,8 @@
 .details-visual strong {
   margin-top: 8px;
   color: var(--text);
-  font-size: 2.2rem;
+  font-size: clamp(1.7rem, 4vw, 2.2rem);
+  overflow-wrap: anywhere;
 }
 
 .details-visual small {
@@ -199,6 +206,7 @@
   color: var(--text);
   font-size: 0.95rem;
   line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
 .details-content-grid {
@@ -228,6 +236,7 @@
   color: var(--muted);
   line-height: 1.6;
   padding-left: 20px;
+  overflow-wrap: anywhere;
 }
 
 .details-panel li::before {
@@ -262,7 +271,7 @@
   max-width: 760px;
 }
 
-@media (max-width: 980px) {
+@media (max-width: 1023px) {
   .details-hero,
   .details-content-grid {
     grid-template-columns: 1fr;
@@ -273,7 +282,11 @@
   }
 }
 
-@media (max-width: 620px) {
+@media (max-width: 767px) {
+  .details-page {
+    gap: 24px;
+  }
+
   .details-actions {
     align-items: stretch;
     flex-direction: column;
@@ -285,8 +298,9 @@
   }
 
   .details-visual {
-    min-height: 340px;
-    padding: 22px;
+    min-height: 300px;
+    aspect-ratio: 4 / 3;
+    padding: clamp(18px, 6vw, 22px);
   }
 
   .details-visual strong {
@@ -299,6 +313,6 @@
 
   .details-panel,
   .details-ethical-notice {
-    padding: 22px;
+    padding: clamp(18px, 6vw, 22px);
   }
 }
