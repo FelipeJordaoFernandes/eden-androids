@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import BrandLogo from '../BrandLogo/BrandLogo.jsx'
+import './Header.css'
 
 const navigationLinks = [
   { path: '/', label: 'Home' },
@@ -109,11 +111,11 @@ function Header() {
       <div className="header-container">
         <NavLink
           to="/"
-          className="brand-logo"
-          aria-label="Eden Androids Home"
+          className="brand-home-link"
+          aria-label="Eden Androids — início"
           onClick={closeMenu}
         >
-          Eden Androids
+          <BrandLogo size="lg" />
         </NavLink>
 
         <nav className="main-nav desktop-nav" aria-label="Navegação principal">
@@ -167,7 +169,7 @@ function Header() {
         aria-hidden={!isMenuOpen}
       >
         <div className="drawer-header">
-          <span className="drawer-brand">Eden Androids</span>
+          <BrandLogo size="md" />
           <button
             ref={closeButtonRef}
             className="drawer-close"

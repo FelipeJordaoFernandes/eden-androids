@@ -68,7 +68,7 @@ function Home() {
     <div className="home-page">
       <section className="home-hero">
         <div className="home-hero-content">
-          <span className="home-eyebrow">Androides premium para um novo cotidiano</span>
+          <span className="eyebrow home-eyebrow">Androides premium para um novo cotidiano</span>
           <h1>Precisão sintética para casas, equipes e operações críticas.</h1>
           <p>
             A Eden Androids conecta design humano, engenharia avançada e
@@ -77,10 +77,10 @@ function Home() {
           </p>
 
           <div className="home-actions">
-            <Link className="home-button home-button-primary" to="/catalog">
+            <Link className="button button-primary" to="/catalog">
               Explorar androides
             </Link>
-            <Link className="home-button home-button-secondary" to="/about">
+            <Link className="button button-secondary" to="/about">
               Conhecer a Eden
             </Link>
           </div>
@@ -109,7 +109,7 @@ function Home() {
 
       <section className="home-section">
         <div className="section-heading">
-          <span className="home-eyebrow">Categorias</span>
+          <span className="eyebrow home-eyebrow">Categorias</span>
           <h2>Androides para cada ambiente</h2>
           <p>
             A linha Eden foi pensada para diferentes níveis de cuidado,
@@ -120,7 +120,7 @@ function Home() {
         <div className="category-grid">
           {categories.map((category) => (
             <article className="category-card" key={category.name}>
-              <span className="card-index">{category.name.slice(0, 2)}</span>
+              <span className="badge card-index">{category.name.slice(0, 2)}</span>
               <h3>{category.name}</h3>
               <p>{category.description}</p>
             </article>
@@ -130,7 +130,7 @@ function Home() {
 
       <section className="home-section">
         <div className="section-heading">
-          <span className="home-eyebrow">Modelos em destaque</span>
+          <span className="eyebrow home-eyebrow">Modelos em destaque</span>
           <h2>Primeiras unidades Eden</h2>
           <p>
             Três modelos selecionados do catálogo para apresentar as linhas Eden.
@@ -140,14 +140,21 @@ function Home() {
         <div className="featured-grid">
           {featuredModels.map((model) => (
             <article className="featured-card" key={model.id}>
-              <span className="model-category">{model.category}</span>
-              <span className="model-type">{model.type}</span>
-              <h3>{model.name}</h3>
-              <strong>{formatCurrency(model.price)}</strong>
-              <p>{model.shortDescription}</p>
-              <Link className="details-link" to={`/product/${model.id}`}>
-                Ver detalhes
-              </Link>
+              <div className="featured-visual" aria-hidden="true">
+                <span>{model.modelCode}</span>
+              </div>
+              <div className="featured-card-body">
+                <div className="featured-meta">
+                  <span className="badge">{model.category}</span>
+                  <span className="badge badge-neutral">{model.type}</span>
+                </div>
+                <h3>{model.name}</h3>
+                <strong>{formatCurrency(model.price)}</strong>
+                <p>{model.shortDescription}</p>
+                <Link className="inline-link details-link" to={`/product/${model.id}`}>
+                  Ver detalhes
+                </Link>
+              </div>
             </article>
           ))}
         </div>
@@ -155,7 +162,7 @@ function Home() {
 
       <section className="home-section institution-section">
         <div className="section-heading">
-          <span className="home-eyebrow">Institucional</span>
+          <span className="eyebrow home-eyebrow">Institucional</span>
           <h2>Engenharia sintética com responsabilidade operacional</h2>
           <p>
             Trabalhamos com androides para residências, empresas e operações
@@ -175,7 +182,7 @@ function Home() {
       </section>
 
       <section className="ethics-notice" aria-label="Aviso ético e legal">
-        <span className="home-eyebrow">Uso responsável</span>
+        <span className="eyebrow home-eyebrow">Uso responsável</span>
         <h2>Protocolos éticos, segurança e rastreabilidade em primeiro lugar.</h2>
         <p>
           Todos os androides Eden seguem protocolos fictícios de segurança,

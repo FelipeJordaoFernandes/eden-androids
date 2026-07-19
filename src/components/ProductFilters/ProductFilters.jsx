@@ -17,7 +17,7 @@ function ProductFilters({
     <div className={`product-filters${isOpen ? ' product-filters-open' : ''}`}>
       <div className="filters-heading">
         <button
-          className="filters-toggle"
+          className="button button-ghost filters-toggle"
           type="button"
           aria-label={isOpen ? 'Fechar filtros do catálogo' : 'Abrir filtros do catálogo'}
           aria-expanded={isOpen}

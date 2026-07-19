@@ -10,13 +10,13 @@ function ProductDetails() {
   if (!product) {
     return (
       <section className="details-page details-page-empty">
-        <span className="details-eyebrow">Produto não encontrado</span>
+        <span className="eyebrow details-eyebrow">Produto não encontrado</span>
         <h1>Este androide não está no catálogo.</h1>
         <p>
           O modelo solicitado não foi localizado. Volte ao catálogo para
           explorar as unidades Eden disponíveis.
         </p>
-        <Link className="details-back-link" to="/catalog">
+        <Link className="button button-secondary details-back-link" to="/catalog">
           Voltar ao catálogo
         </Link>
       </section>
@@ -27,12 +27,12 @@ function ProductDetails() {
     <section className="details-page">
       <div className="details-hero">
         <div className="details-copy">
-          <span className="details-eyebrow">{product.category}</span>
+          <span className="eyebrow details-eyebrow">{product.category}</span>
           <h1>{product.name}</h1>
           <p className="details-line">{product.line}</p>
           <div className="details-tags">
-            <span>{product.type}</span>
-            <span>{product.modelCode}</span>
+            <span className="badge">{product.type}</span>
+            <span className="badge badge-neutral">{product.modelCode}</span>
           </div>
           <strong className="details-price">{formatCurrency(product.price)}</strong>
           <p className="details-specialty">
@@ -41,10 +41,10 @@ function ProductDetails() {
           <p>{product.description}</p>
 
           <div className="details-actions">
-            <button className="details-cart-button" type="button" disabled>
+            <button className="button button-primary details-cart-button" type="button" disabled>
               Adicionar ao carrinho
             </button>
-            <Link className="details-back-link" to="/catalog">
+            <Link className="button button-secondary details-back-link" to="/catalog">
               Voltar ao catálogo
             </Link>
           </div>
@@ -72,7 +72,7 @@ function ProductDetails() {
         </div>
         <div>
           <span>Estoque</span>
-          <strong>{product.stock} unidades</strong>
+          <span className="badge badge-success">{product.stock} unidades</span>
         </div>
         <div>
           <span>Avaliação</span>
@@ -118,7 +118,7 @@ function ProductDetails() {
       </div>
 
       <aside className="details-ethical-notice">
-        <span className="details-eyebrow">Aviso ético e legal</span>
+        <span className="eyebrow details-eyebrow">Aviso ético e legal</span>
         <p>{product.ethicalNotice}</p>
       </aside>
     </section>

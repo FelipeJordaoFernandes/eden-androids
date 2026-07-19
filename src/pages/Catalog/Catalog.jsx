@@ -48,7 +48,7 @@ function Catalog() {
   return (
     <section className="catalog-page">
       <div className="catalog-header">
-        <span className="catalog-eyebrow">Catálogo Eden</span>
+        <span className="eyebrow catalog-eyebrow">Catálogo Eden</span>
         <h1>Androides para cada missão.</h1>
         <p>
           Explore modelos fictícios desenvolvidos para residências, empresas e

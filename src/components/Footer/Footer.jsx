@@ -1,3 +1,6 @@
+import BrandLogo from '../BrandLogo/BrandLogo.jsx'
+import './Footer.css'
+
 const footerLinks = [
   'Política de uso',
   'Garantia sintética',
@@ -10,7 +13,7 @@ function Footer() {
     <footer className="site-footer">
       <div className="footer-container">
         <div className="footer-brand">
-          <strong>Eden Androids</strong>
+          <BrandLogo size="md" />
           <p>
             Tecnologia sintética premium para ambientes domésticos,
             profissionais e empresariais.

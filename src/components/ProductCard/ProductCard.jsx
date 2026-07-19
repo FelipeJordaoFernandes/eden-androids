@@ -11,8 +11,8 @@ function ProductCard({ product }) {
 
       <div className="product-card-body">
         <div className="product-card-meta">
-          <span>{product.category}</span>
-          <span>{product.type}</span>
+          <span className="badge">{product.category}</span>
+          <span className="badge badge-neutral">{product.type}</span>
         </div>
 
         <h3>{product.name}</h3>
@@ -31,7 +31,7 @@ function ProductCard({ product }) {
 
         <p className="product-description">{product.shortDescription}</p>
 
-        <Link className="product-details-link" to={`/product/${product.id}`}>
+        <Link className="inline-link product-details-link" to={`/product/${product.id}`}>
           Ver detalhes
         </Link>
       </div>

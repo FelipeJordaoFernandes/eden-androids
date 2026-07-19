@@ -1,0 +1,65 @@
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.62em;
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.brand-logo-sm {
+  font-size: 0.9rem;
+}
+
+.brand-logo-md {
+  font-size: 1rem;
+}
+
+.brand-logo-lg {
+  font-size: 1.12rem;
+}
+
+.brand-logo-mark {
+  width: 2.35em;
+  height: 2.35em;
+  flex: 0 0 auto;
+  overflow: visible;
+  color: var(--color-primary);
+}
+
+.brand-mark-frame,
+.brand-mark-trace {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.brand-mark-frame {
+  stroke: var(--color-border-strong);
+  stroke-width: 1.5;
+}
+
+.brand-mark-trace {
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.brand-mark-node {
+  fill: var(--color-secondary);
+}
+
+.brand-logo-name {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.brand-logo-name > span {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.brand-logo-symbol-only {
+  gap: 0;
+}
