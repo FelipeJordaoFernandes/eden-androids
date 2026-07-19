@@ -71,6 +71,29 @@
   margin-top: var(--space-8);
 }
 
+.details-cart-meta {
+  min-height: 1.5rem;
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-top: var(--space-3);
+}
+
+.details-cart-feedback {
+  color: var(--color-secondary);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.details-cart-feedback:empty {
+  display: none;
+}
+
+.details-cart-link {
+  font-size: 0.86rem;
+}
+
 .details-visual {
   position: relative;
   width: 100%;

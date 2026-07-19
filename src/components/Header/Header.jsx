@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import useCart from '../../hooks/useCart.js'
 import BrandLogo from '../BrandLogo/BrandLogo.jsx'
 import './Header.css'
 
@@ -15,6 +16,11 @@ function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const closeButtonRef = useRef(null)
   const menuButtonRef = useRef(null)
+  const { totalItems } = useCart()
+  const visibleCartCount = totalItems > 99 ? '99+' : String(totalItems)
+  const cartAriaLabel = `Carrinho, ${totalItems} ${
+    totalItems === 1 ? 'item' : 'itens'
+  }`
 
   function closeMenu() {
     setIsMenuOpen(false)
@@ -123,6 +129,7 @@ function Header() {
             <NavLink
               key={link.path}
               to={link.path}
+              aria-label={link.isCart ? cartAriaLabel : undefined}
               className={({ isActive }) =>
                 `nav-link${isActive ? ' nav-link-active' : ''}${
                   link.isCart ? ' cart-link' : ''
@@ -130,7 +137,11 @@ function Header() {
               }
             >
               <span>{link.label}</span>
-              {link.isCart && <span className="cart-marker" aria-hidden="true" />}
+              {link.isCart && totalItems > 0 && (
+                <span className="cart-count" aria-hidden="true">
+                  {visibleCartCount}
+                </span>
+              )}
             </NavLink>
           ))}
         </nav>
@@ -187,6 +198,7 @@ function Header() {
             <NavLink
               key={link.path}
               to={link.path}
+              aria-label={link.isCart ? cartAriaLabel : undefined}
               onClick={closeMenu}
               tabIndex={isMenuOpen ? 0 : -1}
               className={({ isActive }) =>
@@ -196,7 +208,11 @@ function Header() {
               }
             >
               <span>{link.label}</span>
-              {link.isCart && <span className="cart-marker" aria-hidden="true" />}
+              {link.isCart && totalItems > 0 && (
+                <span className="cart-count" aria-hidden="true">
+                  {visibleCartCount}
+                </span>
+              )}
             </NavLink>
           ))}
         </nav>

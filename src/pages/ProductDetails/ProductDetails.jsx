@@ -1,13 +1,17 @@
-import { useLayoutEffect, useRef } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { products } from '../../data/products.js'
+import useCart from '../../hooks/useCart.js'
 import { formatCurrency } from '../../utils/formatCurrency.js'
 import './ProductDetails.css'
 
 function ProductDetails() {
   const { id } = useParams()
   const titleRef = useRef(null)
+  const [cartFeedback, setCartFeedback] = useState(null)
+  const { addItem, getItemQuantity } = useCart()
   const product = products.find((item) => String(item.id) === id)
+  const cartQuantity = product ? getItemQuantity(product.id) : 0
 
   useLayoutEffect(() => {
     const root = document.documentElement
@@ -34,6 +38,19 @@ function ProductDetails() {
 
     titleRef.current?.focus({ preventScroll: true })
   }, [id])
+
+  function handleAddToCart() {
+    if (!product || product.stock < 1 || cartQuantity >= product.stock) return
+
+    const nextQuantity = cartQuantity + 1
+    addItem(product.id)
+    setCartFeedback({
+      productId: product.id,
+      message: `Adicionado ao carrinho. ${nextQuantity} ${
+        nextQuantity === 1 ? 'unidade deste modelo' : 'unidades deste modelo'
+      } no carrinho.`,
+    })
+  }
 
   if (!product) {
     return (
@@ -73,12 +90,43 @@ function ProductDetails() {
           <p>{product.description}</p>
 
           <div className="details-actions">
-            <button className="button button-primary details-cart-button" type="button" disabled>
-              Adicionar ao carrinho
+            <button
+              className="button button-primary details-cart-button"
+              type="button"
+              disabled={product.stock < 1 || cartQuantity >= product.stock}
+              onClick={handleAddToCart}
+            >
+              {product.stock < 1
+                ? 'Produto indisponível'
+                : cartQuantity >= product.stock
+                  ? 'Limite de estoque atingido'
+                  : 'Adicionar ao carrinho'}
             </button>
             <Link className="button button-secondary details-back-link" to="/catalog">
               Voltar ao catálogo
             </Link>
+          </div>
+
+          <div className="details-cart-meta">
+            <p
+              className="details-cart-feedback"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              {cartFeedback?.productId === product.id
+                ? cartFeedback.message
+                : cartQuantity > 0
+                  ? `${cartQuantity} ${
+                      cartQuantity === 1 ? 'unidade' : 'unidades'
+                    } deste modelo no carrinho.`
+                  : ''}
+            </p>
+            {cartQuantity > 0 && (
+              <Link className="inline-link details-cart-link" to="/cart">
+                Ver carrinho
+              </Link>
+            )}
           </div>
         </div>
 
