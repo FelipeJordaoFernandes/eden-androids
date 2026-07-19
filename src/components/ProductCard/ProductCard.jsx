@@ -5,8 +5,23 @@ import './ProductCard.css'
 function ProductCard({ product }) {
   return (
     <article className="product-card">
-      <div className="product-card-visual" aria-hidden="true">
-        <span>{product.modelCode}</span>
+      <div
+        className={`product-card-visual${
+          product.image ? ' product-card-visual-has-image' : ''
+        }`}
+      >
+        {product.image ? (
+          <img
+            src={product.image}
+            alt={`${product.name} — ${product.type}`}
+            width="1122"
+            height="1402"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <span aria-hidden="true">{product.modelCode}</span>
+        )}
       </div>
 
       <div className="product-card-body">

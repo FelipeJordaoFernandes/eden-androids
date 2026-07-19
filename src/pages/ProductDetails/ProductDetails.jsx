@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { products } from '../../data/products.js'
 import { formatCurrency } from '../../utils/formatCurrency.js'
@@ -5,13 +6,42 @@ import './ProductDetails.css'
 
 function ProductDetails() {
   const { id } = useParams()
+  const titleRef = useRef(null)
   const product = products.find((item) => String(item.id) === id)
+
+  useLayoutEffect(() => {
+    const root = document.documentElement
+    const previousScrollBehavior = root.style.getPropertyValue('scroll-behavior')
+    const previousScrollPriority = root.style.getPropertyPriority('scroll-behavior')
+
+    root.style.setProperty('scroll-behavior', 'auto', 'important')
+    getComputedStyle(root).getPropertyValue('scroll-behavior')
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'auto',
+    })
+
+    if (previousScrollBehavior) {
+      root.style.setProperty(
+        'scroll-behavior',
+        previousScrollBehavior,
+        previousScrollPriority,
+      )
+    } else {
+      root.style.removeProperty('scroll-behavior')
+    }
+
+    titleRef.current?.focus({ preventScroll: true })
+  }, [id])
 
   if (!product) {
     return (
       <section className="details-page details-page-empty">
         <span className="eyebrow details-eyebrow">Produto não encontrado</span>
-        <h1>Este androide não está no catálogo.</h1>
+        <h1 ref={titleRef} tabIndex={-1}>
+          Este androide não está no catálogo.
+        </h1>
         <p>
           O modelo solicitado não foi localizado. Volte ao catálogo para
           explorar as unidades Eden disponíveis.
@@ -28,7 +58,9 @@ function ProductDetails() {
       <div className="details-hero">
         <div className="details-copy">
           <span className="eyebrow details-eyebrow">{product.category}</span>
-          <h1>{product.name}</h1>
+          <h1 ref={titleRef} tabIndex={-1}>
+            {product.name}
+          </h1>
           <p className="details-line">{product.line}</p>
           <div className="details-tags">
             <span className="badge">{product.type}</span>
@@ -50,10 +82,27 @@ function ProductDetails() {
           </div>
         </div>
 
-        <aside className="details-visual" aria-label={`Imagem futura de ${product.name}`}>
-          <span>{product.line}</span>
-          <strong>{product.name}</strong>
-          <small>{product.image}</small>
+        <aside
+          className={`details-visual${
+            product.image ? ' details-visual-has-image' : ''
+          }`}
+          aria-label={product.image ? undefined : `Imagem futura de ${product.name}`}
+        >
+          {product.image ? (
+            <img
+              src={product.image}
+              alt={`${product.name} — ${product.type}`}
+              width="1122"
+              height="1402"
+              decoding="async"
+            />
+          ) : (
+            <>
+              <span>{product.line}</span>
+              <strong>{product.name}</strong>
+              <small>Imagem em preparação</small>
+            </>
+          )}
         </aside>
       </div>
 

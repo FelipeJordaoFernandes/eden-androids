@@ -86,25 +86,41 @@ function Home() {
           </div>
         </div>
 
-        <aside className="home-tech-panel" aria-label="Destaque tecnológico Eden Neural Core">
-          <div className="tech-panel-orbit">
-            <span />
+        <div className="home-hero-visual">
+          <div className="home-hero-image-frame">
+            <img
+              src="/images/backgrounds/home-hero.png"
+              alt="Showroom tecnológico da Eden Androids com androide em plataforma de apresentação"
+              width="1672"
+              height="941"
+              decoding="async"
+              fetchPriority="high"
+            />
           </div>
-          <div className="tech-panel-header">
-            <span>Eden Neural Core</span>
-            <strong>v4.8</strong>
-          </div>
-          <div className="tech-panel-status">
-            <strong>99.98%</strong>
-            <span>sincronia operacional</span>
-          </div>
-          <div className="tech-panel-grid">
-            <span>Autonomia avançada</span>
-            <span>Protocolos éticos</span>
-            <span>Privacidade local</span>
-            <span>Resposta adaptativa</span>
-          </div>
-        </aside>
+
+          <aside
+            className="home-tech-panel"
+            aria-label="Destaque tecnológico Eden Neural Core"
+          >
+            <div className="tech-panel-orbit" aria-hidden="true">
+              <span />
+            </div>
+            <div className="tech-panel-header">
+              <span>Eden Neural Core</span>
+              <strong>v4.8</strong>
+            </div>
+            <div className="tech-panel-status">
+              <strong>99.98%</strong>
+              <span>sincronia operacional</span>
+            </div>
+            <div className="tech-panel-grid">
+              <span>Autonomia avançada</span>
+              <span>Protocolos éticos</span>
+              <span>Privacidade local</span>
+              <span>Resposta adaptativa</span>
+            </div>
+          </aside>
+        </div>
       </section>
 
       <section className="home-section">
@@ -140,8 +156,19 @@ function Home() {
         <div className="featured-grid">
           {featuredModels.map((model) => (
             <article className="featured-card" key={model.id}>
-              <div className="featured-visual" aria-hidden="true">
-                <span>{model.modelCode}</span>
+              <div className="featured-visual">
+                {model.image ? (
+                  <img
+                    src={model.image}
+                    alt={`${model.name} — ${model.type}`}
+                    width="1122"
+                    height="1402"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <span aria-hidden="true">{model.modelCode}</span>
+                )}
               </div>
               <div className="featured-card-body">
                 <div className="featured-meta">
