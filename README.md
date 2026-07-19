@@ -27,6 +27,11 @@ Eden Androids é um e-commerce fictício que simula uma plataforma premium de ve
 - [x] Imagens para Eden Home H-01, Eden Sentinel S-20 e Eden Luxury L-99
 - [x] Placeholders para produtos que ainda não possuem imagem
 - [x] Acessibilidade básica de navegação, controle de foco e uso por teclado
+- [x] Carrinho funcional com Context API, `useReducer`, hook `useCart` e persistência segura no `localStorage`
+- [x] Integração entre detalhes e carrinho, com controle de quantidade, limite de estoque, remoção individual e limpeza completa
+- [x] Garantias adicionais e cálculo de subtotal, garantias e total do pedido
+- [x] Contador dinâmico no Header e no drawer, página de carrinho vazia ou preenchida e resumo responsivo e acessível
+- [x] Versão pública implantada na Vercel
 
 ## Catálogo e dados dos produtos
 
@@ -60,6 +65,22 @@ Os campos `category`, `type`, `specialty` e `modelCode` permitem organizar e pes
 - `specialty`: descrição da especialidade operacional do androide;
 - `modelCode`: código fictício do modelo.
 
+## Carrinho e persistência
+
+O estado global do carrinho é gerenciado com Context API e `useReducer`, enquanto o hook personalizado `useCart` centraliza o acesso às operações e aos valores calculados.
+
+Os dados são persistidos no `localStorage` com a chave `eden-androids:cart:v1`. Apenas `productId`, `quantity` e `warranty` são armazenados; nomes, preços, imagens, estoque e demais informações continuam vindo de `src/data/products.js`.
+
+A recuperação dos dados valida o formato armazenado, descarta registros inválidos e produtos inexistentes e limita quantidades ao estoque atual. Se o `localStorage` estiver indisponível, o carrinho continua funcionando em memória durante a sessão.
+
+As opções de garantia são:
+
+- padrão, sem custo adicional;
+- +12 meses, com acréscimo de 6%;
+- +24 meses, com acréscimo de 10%.
+
+Atualmente, o usuário pode explorar o catálogo, abrir os detalhes de um produto, adicionar androides ao carrinho, alterar quantidades, selecionar garantias e visualizar o resumo financeiro. O carrinho permanece salvo no navegador. Checkout, frete, pagamento e geração de pedido continuam planejados para etapas futuras.
+
 ## Identidade visual
 
 A interface adota uma estética futurista premium, com foco em tecnologia avançada e proximidade social:
@@ -73,13 +94,15 @@ A interface adota uma estética futurista premium, com foco em tecnologia avanç
 
 ## Tecnologias utilizadas
 
-- React
+- React, incluindo Context API e `useReducer`
 - Vite
 - JavaScript
 - React Router DOM
 - CSS
+- Web Storage API (`localStorage`)
 - Google Fonts
 - Git e GitHub
+- Vercel
 
 ## Estrutura de pastas
 
@@ -87,10 +110,17 @@ A interface adota uma estética futurista premium, com foco em tecnologia avanç
 src/
 ├── components/
 │   ├── BrandLogo/
-│   ├── Header/
+│   ├── CartItem/
 │   ├── Footer/
+│   ├── Header/
 │   ├── ProductCard/
 │   └── ProductFilters/
+├── context/
+│   ├── CartContext.jsx
+│   ├── cartContext.js
+│   └── cartConfig.js
+├── hooks/
+│   └── useCart.js
 ├── data/
 ├── pages/
 ├── routes/
@@ -117,7 +147,7 @@ public/
 - [x] Busca
 - [x] Filtros por categoria e tipo
 - [x] Responsividade para mobile, tablet e desktop
-- [ ] Carrinho funcional
+- [x] Carrinho funcional
 - [ ] Checkout fictício
 
 ### MVP 2 — Dados e experiência local
@@ -125,7 +155,7 @@ public/
 - [x] Produtos mantidos em arquivo JavaScript local
 - [x] Catálogo com 24 produtos, categorias, tipos e especialidades
 - [ ] Filtros avançados — parcialmente concluídos com busca e filtros dinâmicos atuais
-- [ ] Persistência com `localStorage`
+- [x] Persistência segura do carrinho com `localStorage`
 - [ ] Imagens para os demais produtos
 
 ### MVP 3 — Back-end
@@ -151,7 +181,26 @@ public/
 
 ### Publicação
 
-- [ ] Deploy na Vercel
+- [x] Deploy na Vercel
+
+O projeto possui uma versão pública implantada na Vercel e recebe atualizações conforme a aplicação evolui.
+
+## Próximas etapas
+
+- [ ] Checkout fictício funcional
+- [ ] Formulário de dados do cliente
+- [ ] Endereço de entrega
+- [ ] Cálculo de frete
+- [ ] Forma de pagamento simulada
+- [ ] Geração de número de pedido
+- [ ] Imagens para os demais androides
+- [ ] Favoritos
+- [ ] Login e cadastro
+- [ ] Área do cliente
+- [ ] Painel administrativo funcional
+- [ ] API
+- [ ] Back-end
+- [ ] Banco de dados
 
 ## Como rodar o projeto localmente
 
