@@ -1,62 +1,36 @@
 # Eden Androids
 
-Eden Androids é uma plataforma fictícia de e-commerce especializada na venda de androides para uso doméstico, profissional e empresarial.
+Eden Androids é um e-commerce fictício que simula uma plataforma premium de venda de androides humanoides para residências, empresas e operações especializadas. Desenvolvido com React e Vite, o projeto foi criado para estudo, experimentação e portfólio em desenvolvimento front-end.
 
-## Objetivo do Projeto
+## Funcionalidades atuais
 
-O projeto foi criado para estudo prático e portfólio, com foco em desenvolvimento front-end usando React. A proposta é evoluir gradualmente conceitos como componentização, rotas, layout responsivo, catálogo de produtos, filtros, página dinâmica de detalhes, carrinho fictício e, futuramente, integração com back-end.
-
-## Status do Projeto
-
-### Concluído
-
-- [x] Criação do projeto com React + Vite
-- [x] Configuração de rotas com React Router
-- [x] Estrutura inicial de páginas
-- [x] Header e Footer
-- [x] Identidade visual inicial
-- [x] Home/Landing page premium
-- [x] Catálogo de produtos
-- [x] Dados locais em `src/data/products.js`
-- [x] Catálogo expandido com 24 androides fictícios
-- [x] Categorias principais
-- [x] Tipos/subcategorias
-- [x] Especialidades por produto
-- [x] ProductCard
+- [x] Estrutura do projeto com React e Vite
+- [x] Rotas com React Router DOM
+- [x] Header e Footer reutilizáveis
+- [x] Home em formato de landing page
+- [x] Hero visual com painel de imagem e conteúdo responsivo
+- [x] Catálogo com 24 androides fictícios
+- [x] Dados locais centralizados em `src/data/products.js`
+- [x] Organização por categorias, tipos/subcategorias e especialidades
 - [x] Busca por nome, linha, categoria, tipo e especialidade
-- [x] Filtros por categoria e tipo/subcategoria
-- [x] Página dinâmica de detalhes via `/product/:id`
-- [x] Tela de produto não encontrado
+- [x] Filtros dinâmicos por categoria e tipo
+- [x] Cards reutilizáveis para os produtos
+- [x] Páginas de detalhes dinâmicas em `/product/:id`
+- [x] Estado específico para produto não encontrado
+- [x] Página de detalhes posicionada no topo a cada mudança de produto
+- [x] Preservação nativa da posição do catálogo ao retornar pelo histórico do navegador
+- [x] Layout responsivo para mobile, tablet e desktop
+- [x] Navegação responsiva com drawer no mobile
+- [x] Identidade visual e sistema de design baseados em variáveis CSS
+- [x] Google Fonts: Space Grotesk e Inter
+- [x] BrandLogo em SVG e favicon personalizado
+- [x] Imagens para Eden Home H-01, Eden Sentinel S-20 e Eden Luxury L-99
+- [x] Placeholders para produtos que ainda não possuem imagem
+- [x] Acessibilidade básica de navegação, controle de foco e uso por teclado
 
-### Pendente
+## Catálogo e dados dos produtos
 
-- [ ] Carrinho fictício
-- [ ] Persistência com localStorage
-- [ ] Checkout fictício
-- [ ] Área do cliente
-- [ ] Painel administrativo funcional
-- [ ] Login/cadastro
-- [ ] API
-- [ ] Back-end
-- [ ] Banco de dados
-
-## Funcionalidades Atuais
-
-- Navegação entre páginas com React Router.
-- Layout base com Header e Footer.
-- Home em formato de landing page premium.
-- Catálogo com 24 androides fictícios.
-- Produtos organizados por categoria principal, tipo/subcategoria e especialidade.
-- Busca textual por nome, linha, categoria, tipo e especialidade.
-- Filtro por categoria.
-- Filtro dinâmico por tipo/subcategoria.
-- Cards de produto com preço, categoria, tipo, especialidade, autonomia, bateria e avaliação.
-- Página dinâmica de detalhes para cada produto.
-- Estado visual para produto não encontrado.
-
-## Estrutura de Dados dos Produtos
-
-Os produtos ficam em `src/data/products.js` e usam dados locais em JavaScript. Cada item possui campos como:
+Os 24 produtos são mantidos localmente em `src/data/products.js`. Cada item possui campos como:
 
 - `id`
 - `name`
@@ -79,69 +53,107 @@ Os produtos ficam em `src/data/products.js` e usam dados locais em JavaScript. C
 - `specs`
 - `ethicalNotice`
 
-Os campos `category`, `type`, `specialty` e `modelCode` permitem organizar o catálogo de forma mais rica:
+Os campos `category`, `type`, `specialty` e `modelCode` permitem organizar e pesquisar o catálogo por diferentes características operacionais de cada androide:
 
-- `category`: categoria principal, como Doméstico, Segurança ou Corporativo.
-- `type`: tipo ou subcategoria, como Babá, Porteiro ou Assistente executivo.
-- `specialty`: descrição da especialidade operacional do androide.
+- `category`: categoria principal, como Doméstico, Segurança ou Corporativo;
+- `type`: tipo ou subcategoria, como Babá, Porteiro ou Assistente executivo;
+- `specialty`: descrição da especialidade operacional do androide;
 - `modelCode`: código fictício do modelo.
 
-## Tecnologias Utilizadas
+## Identidade visual
+
+A interface adota uma estética futurista premium, com foco em tecnologia avançada e proximidade social:
+
+- fundo azul-marinho quase preto;
+- detalhes em ciano, azul e verde;
+- Space Grotesk nos títulos;
+- Inter nos textos e elementos de interface;
+- androides humanoides realistas e socialmente acolhedores;
+- componentes, cores, espaçamentos, superfícies e estados definidos por variáveis CSS.
+
+## Tecnologias utilizadas
 
 - React
 - Vite
 - JavaScript
 - React Router DOM
 - CSS
+- Google Fonts
+- Git e GitHub
 
-## Funcionalidades Planejadas por MVP
+## Estrutura de pastas
+
+```text
+src/
+├── components/
+│   ├── BrandLogo/
+│   ├── Header/
+│   ├── Footer/
+│   ├── ProductCard/
+│   └── ProductFilters/
+├── data/
+├── pages/
+├── routes/
+├── utils/
+├── App.jsx
+├── main.jsx
+└── index.css
+
+public/
+├── images/
+│   ├── backgrounds/
+│   ├── products/
+│   └── brand/
+└── favicon.svg
+```
+
+## Roadmap
 
 ### MVP 1 — Front-end
 
 - [x] Home
 - [x] Catálogo
-- [x] Página de detalhes
-- [x] Busca e filtros iniciais
-- [x] Layout responsivo inicial
-- [ ] Carrinho fictício
+- [x] Páginas de detalhes
+- [x] Busca
+- [x] Filtros por categoria e tipo
+- [x] Responsividade para mobile, tablet e desktop
+- [ ] Carrinho funcional
+- [ ] Checkout fictício
 
-### MVP 2 — Dados
+### MVP 2 — Dados e experiência local
 
-- [x] Produtos vindos de arquivo local JavaScript
-- [x] Catálogo expandido com categorias, tipos e especialidades
-- [x] Busca por múltiplos campos
-- [ ] Carrinho persistindo no localStorage
-- [ ] Produtos vindos de JSON externo ou API
+- [x] Produtos mantidos em arquivo JavaScript local
+- [x] Catálogo com 24 produtos, categorias, tipos e especialidades
+- [ ] Filtros avançados — parcialmente concluídos com busca e filtros dinâmicos atuais
+- [ ] Persistência com `localStorage`
+- [ ] Imagens para os demais produtos
 
 ### MVP 3 — Back-end
 
-- [ ] Node.js/Express ou Java Spring
-- [ ] PostgreSQL
-- [ ] Cadastro/login
-- [ ] Pedidos
+- [ ] Back-end — tecnologia ainda a definir entre as opções planejadas, como Node.js/Express ou Java Spring
+- [ ] API
+- [ ] Banco de dados — PostgreSQL permanece como opção planejada
+- [ ] Login e cadastro funcionais
+- [ ] Pedidos integrados
 - [ ] Painel administrativo funcional
 
 ### MVP 4 — Funcionalidades avançadas
 
-- [ ] Dashboard administrativo
-- [ ] Upload de imagem
-- [ ] Status de pedido
+- [ ] Favoritos
+- [ ] Área do cliente
 - [ ] Avaliações
-- [ ] Recomendação de produto
-- [ ] Simulação de financiamento/assinatura
+- [ ] Dashboard administrativo
+- [ ] Upload de imagens
+- [ ] Acompanhamento de pedidos
+- [ ] Recomendações de produtos
+- [ ] Simulação de financiamento ou assinatura
 - [ ] Chatbot de atendimento
 
-## Próximas Etapas
+### Publicação
 
-- Criar carrinho fictício sem integração com pagamento real.
-- Adicionar persistência do carrinho com localStorage.
-- Criar checkout fictício.
-- Melhorar a área de detalhes dos produtos com imagens reais ou geradas.
-- Evoluir a área do cliente.
-- Planejar o painel administrativo funcional.
-- Futuramente estudar integração com API, back-end e banco de dados.
+- [ ] Deploy na Vercel
 
-## Como Rodar o Projeto Localmente
+## Como rodar o projeto localmente
 
 ```bash
 git clone https://github.com/FelipeJordaoFernandes/eden-androids.git
@@ -152,21 +164,17 @@ npm run dev
 
 Depois de iniciar o servidor de desenvolvimento, acesse a URL exibida no terminal.
 
-## Estrutura Inicial de Pastas
+Para gerar a versão de produção e verificar a qualidade do código:
 
-```text
-src/
-├── components/
-├── pages/
-├── routes/
-├── data/
-└── utils/
+```bash
+npm run build
+npm run lint
 ```
 
-## Aviso
+## Aviso legal
 
-Este projeto é fictício e foi criado para fins de estudo e portfólio. Ele não utiliza nomes, marcas ou personagens oficiais de franquias existentes.
+Este é um projeto fictício, criado exclusivamente para estudo e portfólio. A Eden Androids não representa uma empresa real e não utiliza nomes, personagens ou marcas oficiais de franquias existentes. Todos os produtos, preços e processos de compra apresentados são simulações e não envolvem transações reais.
 
 ## Autor
 
-Desenvolvido por Felipe Jordão Fernandes.
+Felipe Jordão Fernandes
