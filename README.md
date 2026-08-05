@@ -31,6 +31,10 @@ Eden Androids é um e-commerce fictício que simula uma plataforma premium de ve
 - [x] Integração entre detalhes e carrinho, com controle de quantidade, limite de estoque, remoção individual e limpeza completa
 - [x] Garantias adicionais e cálculo de subtotal, garantias e total do pedido
 - [x] Contador dinâmico no Header e no drawer, página de carrinho vazia ou preenchida e resumo responsivo e acessível
+- [x] Checkout fictício com dados do cliente, endereço, opções de entrega e pagamento simulado
+- [x] Validação de e-mail, telefone com DDD e CPF com dígitos verificadores
+- [x] Consulta automática de CEP, preenchimento do endereço com ViaCEP e cálculo de frete após o endereço completo
+- [x] Confirmação da simulação com resumo financeiro e número de pedido
 - [x] Versão pública implantada na Vercel
 
 ## Catálogo e dados dos produtos
@@ -79,7 +83,7 @@ As opções de garantia são:
 - +12 meses, com acréscimo de 6%;
 - +24 meses, com acréscimo de 10%.
 
-Atualmente, o usuário pode explorar o catálogo, abrir os detalhes de um produto, adicionar androides ao carrinho, alterar quantidades, selecionar garantias e visualizar o resumo financeiro. O carrinho permanece salvo no navegador. Checkout, frete, pagamento e geração de pedido continuam planejados para etapas futuras.
+Atualmente, o usuário pode explorar o catálogo, abrir os detalhes de um produto, adicionar androides ao carrinho, alterar quantidades, selecionar garantias e visualizar o resumo financeiro. O carrinho permanece salvo no navegador. No checkout, é possível preencher dados do cliente e da entrega, simular o frete, escolher uma forma de pagamento fictícia e gerar um número de pedido demonstrativo. Nenhuma cobrança ou entrega real é realizada.
 
 ## Identidade visual
 
@@ -148,7 +152,7 @@ public/
 - [x] Filtros por categoria e tipo
 - [x] Responsividade para mobile, tablet e desktop
 - [x] Carrinho funcional
-- [ ] Checkout fictício
+- [x] Checkout fictício
 
 ### MVP 2 — Dados e experiência local
 
@@ -187,12 +191,12 @@ O projeto possui uma versão pública implantada na Vercel e recebe atualizaçõ
 
 ## Próximas etapas
 
-- [ ] Checkout fictício funcional
-- [ ] Formulário de dados do cliente
-- [ ] Endereço de entrega
-- [ ] Cálculo de frete
-- [ ] Forma de pagamento simulada
-- [ ] Geração de número de pedido
+- [x] Checkout fictício funcional
+- [x] Formulário de dados do cliente
+- [x] Endereço de entrega
+- [x] Cálculo de frete
+- [x] Forma de pagamento simulada
+- [x] Geração de número de pedido
 - [ ] Imagens para os demais androides
 - [ ] Favoritos
 - [ ] Login e cadastro
