@@ -35,6 +35,8 @@ Eden Androids é um e-commerce fictício que simula uma plataforma premium de ve
 - [x] Validação de e-mail, telefone com DDD e CPF com dígitos verificadores
 - [x] Consulta automática de CEP, preenchimento do endereço com ViaCEP e cálculo de frete após o endereço completo
 - [x] Confirmação da simulação com resumo financeiro e número de pedido
+- [x] Página acessível de rota não encontrada para endereços inválidos
+- [x] Testes automatizados para checkout, carrinho, validações, cálculos e rotas
 - [x] Versão pública implantada na Vercel
 
 ## Catálogo e dados dos produtos
@@ -85,6 +87,19 @@ As opções de garantia são:
 
 Atualmente, o usuário pode explorar o catálogo, abrir os detalhes de um produto, adicionar androides ao carrinho, alterar quantidades, selecionar garantias e visualizar o resumo financeiro. O carrinho permanece salvo no navegador. No checkout, é possível preencher dados do cliente e da entrega, simular o frete, escolher uma forma de pagamento fictícia e gerar um número de pedido demonstrativo. Nenhuma cobrança ou entrega real é realizada.
 
+## Organização do checkout
+
+O checkout é organizado por responsabilidade dentro de `src/pages/Checkout`:
+
+- `components/`: cabeçalho, dados do cliente, entrega, pagamento, resumo e estados vazio/confirmado;
+- `hooks/`: controlador do fluxo, estado do formulário, foco e coordenação das etapas;
+- `services/`: integração isolada com o ViaCEP;
+- `utils/`: máscaras, validações e criação/cálculo do pedido;
+- `checkoutConfig.js`: opções e campos compartilhados;
+- arquivos CSS separados para formulário, resumo e estados finais.
+
+As regras puras do carrinho ficam em `src/context/cartState.js`, enquanto o `CartContext.jsx` permanece responsável por integrar essas regras ao React e ao `localStorage`.
+
 ## Identidade visual
 
 A interface adota uma estética futurista premium, com foco em tecnologia avançada e proximidade social:
@@ -104,6 +119,7 @@ A interface adota uma estética futurista premium, com foco em tecnologia avanç
 - React Router DOM
 - CSS
 - Web Storage API (`localStorage`)
+- Vitest, jsdom e React Testing Library
 - Google Fonts
 - Git e GitHub
 - Vercel
@@ -122,12 +138,20 @@ src/
 ├── context/
 │   ├── CartContext.jsx
 │   ├── cartContext.js
-│   └── cartConfig.js
+│   ├── cartConfig.js
+│   └── cartState.js
 ├── hooks/
 │   └── useCart.js
 ├── data/
 ├── pages/
+│   ├── Checkout/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── services/
+│   │   └── utils/
+│   └── NotFound/
 ├── routes/
+├── test/
 ├── utils/
 ├── App.jsx
 ├── main.jsx
@@ -217,9 +241,26 @@ npm run dev
 
 Depois de iniciar o servidor de desenvolvimento, acesse a URL exibida no terminal.
 
-Para gerar a versão de produção e verificar a qualidade do código:
+## Testes automatizados
+
+Para executar toda a suíte uma vez:
 
 ```bash
+npm test
+```
+
+Para manter o Vitest observando alterações durante o desenvolvimento:
+
+```bash
+npm run test:watch
+```
+
+Os testes cobrem máscaras e validações, regras e persistência do carrinho, cálculos financeiros, integração simulada com o ViaCEP, estados essenciais do checkout e a rota de página não encontrada. As consultas de CEP são simuladas e não dependem de acesso à internet.
+
+Para executar a validação completa do projeto:
+
+```bash
+npm test
 npm run build
 npm run lint
 ```
