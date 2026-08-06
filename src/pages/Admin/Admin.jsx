@@ -3,8 +3,8 @@ function Admin() {
     <section>
       <h1>Admin</h1>
       <p>
-        O painel administrativo sera preparado em uma etapa futura para gerenciar
-        produtos e operacoes da plataforma.
+        O painel administrativo será preparado em uma etapa futura para gerenciar
+        produtos e operações da plataforma.
       </p>
     </section>
   )
