@@ -1,0 +1,69 @@
+.app-main > .not-found-page {
+  position: relative;
+  max-width: none;
+  min-height: min(620px, 72vh);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 82% 22%, var(--color-primary-soft), transparent 22rem),
+    var(--gradient-surface),
+    var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  padding: clamp(var(--space-6), 7vw, var(--space-16));
+}
+
+.not-found-page::before {
+  display: none;
+}
+
+.not-found-eyebrow {
+  margin-bottom: var(--space-5);
+}
+
+.not-found-code {
+  position: absolute;
+  right: clamp(-1rem, 4vw, var(--space-10));
+  color: var(--color-primary-soft);
+  font-family: var(--font-heading);
+  font-size: clamp(9rem, 28vw, 22rem);
+  font-weight: 600;
+  line-height: 0.8;
+  pointer-events: none;
+  user-select: none;
+}
+
+.not-found-page h1,
+.not-found-page p,
+.not-found-actions {
+  position: relative;
+  z-index: 1;
+}
+
+.not-found-page h1 {
+  max-width: 760px;
+  text-wrap: balance;
+}
+
+.not-found-actions {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-top: var(--space-8);
+}
+
+@media (max-width: 560px) {
+  .not-found-actions,
+  .not-found-actions .button {
+    width: 100%;
+  }
+
+  .not-found-code {
+    top: var(--space-12);
+    right: -1rem;
+  }
+}

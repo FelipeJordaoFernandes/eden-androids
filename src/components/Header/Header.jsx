@@ -9,7 +9,6 @@ const navigationLinks = [
   { path: '/catalog', label: 'Catálogo' },
   { path: '/about', label: 'Sobre' },
   { path: '/cart', label: 'Carrinho', isCart: true },
-  { path: '/admin', label: 'Admin' },
 ]
 
 function Header() {
