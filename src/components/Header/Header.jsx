@@ -8,6 +8,7 @@ const navigationLinks = [
   { path: '/', label: 'Home' },
   { path: '/catalog', label: 'Catálogo' },
   { path: '/about', label: 'Sobre' },
+  { path: '/orders', label: 'Pedidos' },
   { path: '/cart', label: 'Carrinho', isCart: true },
 ]
 

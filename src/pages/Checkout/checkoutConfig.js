@@ -19,21 +19,26 @@ export const paymentOptions = Object.freeze([
   Object.freeze({
     id: 'pix',
     label: 'Pix',
-    description: 'Aprovação simulada imediata',
+    orderLabel: 'Pix',
+    description: 'Pagamento à vista',
   }),
   Object.freeze({
     id: 'card',
     label: 'Cartão',
-    description: 'Até 12 parcelas sem juros',
+    orderLabel: 'Cartão de crédito',
+    description: 'De 1x a 10x sem juros',
   }),
   Object.freeze({
     id: 'invoice',
     label: 'Boleto',
-    description: 'Vencimento simulado em 3 dias',
+    orderLabel: 'Boleto',
+    description: 'Vencimento em 3 dias',
   }),
 ])
 
-export const installmentOptions = Object.freeze([1, 3, 6, 10, 12])
+export const installmentOptions = Object.freeze(
+  Array.from({ length: 10 }, (_, index) => index + 1),
+)
 
 export const requiredAddressFields = Object.freeze([
   'postalCode',
