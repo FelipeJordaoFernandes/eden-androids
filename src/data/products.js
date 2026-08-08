@@ -86,7 +86,7 @@ export const products = [
     autonomyLevel: 'Clínica assistida',
     battery: '30 horas',
     warranty: '36 meses',
-    image: null,
+    image: '/images/products/eden-care-m12-v2.webp',
     shortDescription:
       'Apoio clínico supervisionado para cuidado, mobilidade e triagem básica.',
     description:
@@ -122,7 +122,7 @@ export const products = [
     autonomyLevel: 'Pedagógica',
     battery: '40 horas',
     warranty: '24 meses',
-    image: null,
+    image: '/images/products/eden-tutor-t08.webp',
     shortDescription:
       'Tutor adaptativo para escolas, laboratórios e aprendizagem individual.',
     description:
@@ -157,7 +157,7 @@ export const products = [
     autonomyLevel: 'Interação social',
     battery: '38 horas',
     warranty: '24 meses',
-    image: null,
+    image: '/images/products/eden-social-c15.webp',
     shortDescription:
       'Presença social calibrada para companhia, escuta e bem-estar cotidiano.',
     description:
@@ -192,7 +192,7 @@ export const products = [
     autonomyLevel: 'Operacional',
     battery: '28 horas',
     warranty: '48 meses',
-    image: null,
+    image: '/images/products/eden-forge-i70-v2.webp',
     shortDescription:
       'Força operacional para linhas produtivas, inspeção e ambientes críticos.',
     description:
@@ -264,7 +264,7 @@ export const products = [
     autonomyLevel: 'Corporativa',
     battery: '34 horas',
     warranty: '36 meses',
-    image: null,
+    image: '/images/products/eden-exec-b30-v2.webp',
     shortDescription:
       'Automação corporativa para recepção, logística interna e suporte a equipes.',
     description:
@@ -299,7 +299,7 @@ export const products = [
     autonomyLevel: 'Supervisionada',
     battery: '39 horas',
     warranty: '24 meses',
-    image: null,
+    image: '/images/products/eden-nanny-h04.webp',
     shortDescription:
       'Apoio doméstico para cuidado infantil, agendas familiares e supervisão leve.',
     description:
@@ -333,7 +333,7 @@ export const products = [
     autonomyLevel: 'Culinária assistida',
     battery: '34 horas',
     warranty: '24 meses',
-    image: null,
+    image: '/images/products/eden-chef-h07-v2.webp',
     shortDescription:
       'Unidade doméstica para preparo assistido de refeições e organização culinária.',
     description:
@@ -367,7 +367,7 @@ export const products = [
     autonomyLevel: 'Controle de acesso',
     battery: '44 horas',
     warranty: '24 meses',
-    image: null,
+    image: '/images/products/eden-gate-s12.webp',
     shortDescription:
       'Porteiro sintético para recepção, identificação e controle de acesso.',
     description:
@@ -401,7 +401,7 @@ export const products = [
     autonomyLevel: 'Escolta supervisionada',
     battery: '32 horas',
     warranty: '36 meses',
-    image: null,
+    image: '/images/products/eden-shield-s30-v2.webp',
     shortDescription:
       'Unidade de proteção pessoal para acompanhamento preventivo e rotas seguras.',
     description:
@@ -435,7 +435,7 @@ export const products = [
     autonomyLevel: 'Hospitalar assistida',
     battery: '26 horas',
     warranty: '36 meses',
-    image: null,
+    image: '/images/products/eden-ward-m18-v2.webp',
     shortDescription:
       'Suporte hospitalar para fluxos internos, materiais e equipes clínicas.',
     description:
@@ -469,7 +469,7 @@ export const products = [
     autonomyLevel: 'Domiciliar monitorada',
     battery: '37 horas',
     warranty: '24 meses',
-    image: null,
+    image: '/images/products/eden-vital-m21-v2.webp',
     shortDescription:
       'Monitoramento domiciliar para rotina de cuidado e alertas preventivos.',
     description:
@@ -503,7 +503,7 @@ export const products = [
     autonomyLevel: 'Linguística assistida',
     battery: '41 horas',
     warranty: '24 meses',
-    image: null,
+    image: '/images/products/eden-lingua-t14.webp',
     shortDescription:
       'Professor de idiomas para prática conversacional e trilhas personalizadas.',
     description:
@@ -537,7 +537,7 @@ export const products = [
     autonomyLevel: 'Instrucional',
     battery: '35 horas',
     warranty: '36 meses',
-    image: null,
+    image: '/images/products/eden-mentor-t22.webp',
     shortDescription:
       'Instrutor técnico para treinamentos, oficinas e laboratórios supervisionados.',
     description:
@@ -571,7 +571,7 @@ export const products = [
     autonomyLevel: 'Pessoal assistida',
     battery: '40 horas',
     warranty: '24 meses',
-    image: null,
+    image: '/images/products/eden-persona-c19.webp',
     shortDescription:
       'Assistente pessoal para agenda, organização cotidiana e suporte discreto.',
     description:
@@ -605,7 +605,7 @@ export const products = [
     autonomyLevel: 'Acessibilidade assistida',
     battery: '33 horas',
     warranty: '36 meses',
-    image: null,
+    image: '/images/products/eden-access-c24.webp',
     shortDescription:
       'Guia sintético para orientação, mobilidade assistida e suporte inclusivo.',
     description:
@@ -639,7 +639,7 @@ export const products = [
     autonomyLevel: 'Inspeção técnica',
     battery: '31 horas',
     warranty: '48 meses',
-    image: null,
+    image: '/images/products/eden-inspect-i44.webp',
     shortDescription:
       'Inspetor industrial para checagens técnicas, anomalias e manutenção preventiva.',
     description:
@@ -673,7 +673,7 @@ export const products = [
     autonomyLevel: 'Logística assistida',
     battery: '36 horas',
     warranty: '36 meses',
-    image: null,
+    image: '/images/products/eden-flow-i55.webp',
     shortDescription:
       'Unidade logística para inventário, movimentação interna e distribuição.',
     description:
@@ -707,7 +707,7 @@ export const products = [
     autonomyLevel: 'Residencial premium',
     battery: '43 horas',
     warranty: '48 meses',
-    image: null,
+    image: '/images/products/eden-manor-l42.webp',
     shortDescription:
       'Mordomo tecnológico para residências premium, hospitalidade e automação.',
     description:
@@ -741,7 +741,7 @@ export const products = [
     autonomyLevel: 'Consultiva',
     battery: '39 horas',
     warranty: '36 meses',
-    image: null,
+    image: '/images/products/eden-aura-l77.webp',
     shortDescription:
       'Consultor sintético para curadoria pessoal, agenda social e experiências.',
     description:
@@ -775,7 +775,7 @@ export const products = [
     autonomyLevel: 'Atendimento assistido',
     battery: '42 horas',
     warranty: '24 meses',
-    image: null,
+    image: '/images/products/eden-desk-b16.webp',
     shortDescription:
       'Recepcionista corporativo para visitantes, agenda e orientação inicial.',
     description:
@@ -809,7 +809,7 @@ export const products = [
     autonomyLevel: 'Atendimento corporativo',
     battery: '38 horas',
     warranty: '36 meses',
-    image: null,
+    image: '/images/products/eden-service-b28.webp',
     shortDescription:
       'Unidade de atendimento empresarial para triagem, suporte e orientação.',
     description:
