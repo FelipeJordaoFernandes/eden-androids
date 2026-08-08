@@ -212,10 +212,10 @@ function Home() {
         <span className="eyebrow home-eyebrow">Uso responsável</span>
         <h2>Protocolos éticos, segurança e rastreabilidade em primeiro lugar.</h2>
         <p>
-          Todos os androides Eden seguem protocolos fictícios de segurança,
-          privacidade, rastreabilidade e uso responsável. A operação de cada
-          unidade deve respeitar limites legais, consentimento humano e auditoria
-          técnica contínua.
+          Todos os androides Eden seguem protocolos de segurança, privacidade,
+          rastreabilidade e uso responsável. A operação de cada unidade deve
+          respeitar limites legais, consentimento humano e auditoria técnica
+          contínua.
         </p>
       </section>
     </div>

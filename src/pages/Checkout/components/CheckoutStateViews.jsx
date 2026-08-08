@@ -9,10 +9,7 @@ export function CheckoutEmpty({ titleRef }) {
         <h1 id="checkout-title" ref={titleRef} tabIndex={-1}>
           Seu checkout está vazio.
         </h1>
-        <p>
-          Adicione ao menos um androide ao carrinho para iniciar a simulação
-          de compra.
-        </p>
+        <p>Adicione ao menos um androide ao carrinho para continuar.</p>
         <Link className="button button-primary" to="/catalog">
           Explorar androides
         </Link>
@@ -28,19 +25,17 @@ export function CheckoutConfirmation({ confirmationRef, order }) {
         <div className="checkout-confirmation-symbol" aria-hidden="true">
           <span>✓</span>
         </div>
-        <span className="eyebrow checkout-eyebrow">Simulação concluída</span>
+        <span className="eyebrow checkout-eyebrow">Pedido salvo</span>
         <h1
           id="checkout-confirmation-title"
           ref={confirmationRef}
           tabIndex={-1}
         >
-          Pedido simulado concluído.
+          Pedido concluído.
         </h1>
         <p>
-          Obrigado, {order.customerName}. O pedido abaixo é apenas
-          demonstrativo e nenhuma mensagem foi enviada para{' '}
-          <strong>{order.email}</strong>. Nenhuma cobrança ou entrega real será
-          realizada.
+          Seu pedido foi salvo neste dispositivo. O histórico fica disponível
+          somente neste navegador.
         </p>
 
         <div className="checkout-confirmation-number">
@@ -51,17 +46,17 @@ export function CheckoutConfirmation({ confirmationRef, order }) {
         <div className="checkout-confirmation-grid">
           <div>
             <span>Entrega</span>
-            <strong>{order.shipping.label}</strong>
+            <strong>{order.shipping.method}</strong>
             <small>{order.shipping.estimate}</small>
           </div>
           <div>
             <span>Pagamento</span>
-            <strong>{order.paymentLabel}</strong>
-            <small>Aprovação apenas demonstrativa</small>
+            <strong>{order.paymentMethod}</strong>
+            <small>Forma escolhida no checkout</small>
           </div>
           <div>
-            <span>Total simulado</span>
-            <strong>{formatCurrency(order.grandTotal)}</strong>
+            <span>Total do pedido</span>
+            <strong>{formatCurrency(order.total)}</strong>
             <small>
               {order.items.length}{' '}
               {order.items.length === 1 ? 'modelo' : 'modelos'} no pedido
@@ -70,11 +65,17 @@ export function CheckoutConfirmation({ confirmationRef, order }) {
         </div>
 
         <div className="checkout-confirmation-actions">
-          <Link className="button button-primary" to="/catalog">
-            Explorar novos modelos
+          <Link
+            className="button button-primary"
+            to={`/orders/${encodeURIComponent(order.number)}`}
+          >
+            Ver detalhes do pedido
           </Link>
-          <Link className="button button-ghost" to="/">
-            Voltar para a home
+          <Link className="button button-ghost" to="/orders">
+            Ver histórico de pedidos
+          </Link>
+          <Link className="button button-ghost" to="/catalog">
+            Continuar comprando
           </Link>
         </div>
       </div>

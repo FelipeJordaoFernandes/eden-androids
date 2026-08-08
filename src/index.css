@@ -285,9 +285,7 @@ p {
 }
 
 .eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-3);
+  display: inline-block;
   color: var(--color-primary);
   font-family: var(--font-heading);
   font-size: 0.72rem;
@@ -295,14 +293,6 @@ p {
   letter-spacing: 0.15em;
   line-height: 1.4;
   text-transform: uppercase;
-}
-
-.eyebrow::before {
-  content: '';
-  width: 24px;
-  height: 1px;
-  flex: 0 0 auto;
-  background: var(--color-secondary);
 }
 
 .badge {

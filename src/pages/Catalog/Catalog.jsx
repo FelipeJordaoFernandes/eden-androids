@@ -51,9 +51,9 @@ function Catalog() {
         <span className="eyebrow catalog-eyebrow">Catálogo Eden</span>
         <h1>Androides para cada missão.</h1>
         <p>
-          Explore modelos fictícios desenvolvidos para residências, empresas e
-          operações especializadas, com diferentes níveis de autonomia, suporte
-          e protocolos éticos.
+          Explore modelos desenvolvidos para residências, empresas e operações
+          especializadas, com diferentes níveis de autonomia, suporte e
+          protocolos éticos.
         </p>
       </div>
 

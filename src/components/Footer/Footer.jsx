@@ -29,7 +29,7 @@ function Footer() {
         </nav>
 
         <p className="footer-copy">
-          Copyright 2026 Eden Androids. Todos os direitos fictícios reservados.
+          © 2026 Eden Androids. Projeto conceitual para estudo e portfólio.
         </p>
       </div>
     </footer>

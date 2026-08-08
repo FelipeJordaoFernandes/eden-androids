@@ -7,6 +7,8 @@ import Checkout from '../pages/Checkout/Checkout.jsx'
 import About from '../pages/About/About.jsx'
 import Admin from '../pages/Admin/Admin.jsx'
 import NotFound from '../pages/NotFound/NotFound.jsx'
+import Orders from '../pages/Orders/Orders.jsx'
+import OrderDetails from '../pages/Orders/OrderDetails.jsx'
 
 function AppRoutes() {
   return (
@@ -16,6 +18,8 @@ function AppRoutes() {
       <Route path="/product/:id" element={<ProductDetails />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/checkout" element={<Checkout />} />
+      <Route path="/orders" element={<Orders />} />
+      <Route path="/orders/:orderNumber" element={<OrderDetails />} />
       <Route path="/about" element={<About />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="*" element={<NotFound />} />

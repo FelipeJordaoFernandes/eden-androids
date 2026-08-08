@@ -73,19 +73,15 @@ function CheckoutSummary({
           onChange={onFieldChange}
           required
         />
-        <span>
-          Confirmo que este é um checkout fictício, sem compra, cobrança ou
-          entrega real.
-        </span>
+        <span>Confirmo que revisei os dados deste pedido.</span>
       </label>
 
       <button className="button button-primary checkout-submit" type="submit">
-        Concluir pedido simulado
+        Concluir pedido
       </button>
       <p className="checkout-security-note">
         <span aria-hidden="true">◇</span>
-        Ambiente demonstrativo. Dados pessoais e de pagamento não são
-        armazenados; apenas o CEP é consultado no ViaCEP.
+        Dados de cartão não são armazenados. Nenhum pagamento real é processado.
       </p>
     </aside>
   )

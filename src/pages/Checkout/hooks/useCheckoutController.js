@@ -1,5 +1,11 @@
 import { useLayoutEffect, useRef, useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import useCart from '../../../hooks/useCart.js'
+import {
+  findOrderByNumber,
+  loadOrders,
+  saveOrder,
+} from '../../../services/orderStorage.js'
 import {
   createInitialCheckoutData,
   customerFieldNames,
@@ -15,6 +21,7 @@ import {
 } from '../utils/checkoutMasks.js'
 import {
   calculateCheckoutTotal,
+  createAvailableOrderNumber,
   createOrderSnapshot,
 } from '../utils/checkoutOrder.js'
 import {
@@ -23,11 +30,14 @@ import {
 } from '../utils/checkoutValidation.js'
 
 function useCheckoutController() {
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const titleRef = useRef(null)
   const postalCodeRef = useRef(null)
   const shippingButtonRef = useRef(null)
   const confirmationRef = useRef(null)
   const postalLookupIdRef = useRef(0)
+  const orderSubmissionRef = useRef(false)
   const [formData, setFormData] = useState(createInitialCheckoutData)
   const [fieldErrors, setFieldErrors] = useState({
     email: '',
@@ -40,7 +50,9 @@ function useCheckoutController() {
   const [postalCodeResolved, setPostalCodeResolved] = useState(false)
   const [postalLookupNotice, setPostalLookupNotice] = useState('')
   const [isPostalCodeLoading, setIsPostalCodeLoading] = useState(false)
-  const [completedOrder, setCompletedOrder] = useState(null)
+  const [completedOrder, setCompletedOrder] = useState(() =>
+    findOrderByNumber(searchParams.get('order')),
+  )
   const cart = useCart()
 
   const selectedShipping =
@@ -233,21 +245,38 @@ function useCheckoutController() {
       return
     }
 
+    if (orderSubmissionRef.current) return
+
+    orderSubmissionRef.current = true
+
     const payment = paymentOptions.find(
       (option) => option.id === formData.paymentMethod,
     )
+    const now = new Date()
+    const orderNumber = createAvailableOrderNumber(
+      loadOrders().map((storedOrder) => storedOrder.number),
+      now,
+    )
     const order = createOrderSnapshot({
       cartItems: cart.cartItems,
-      customerName: formData.fullName,
-      email: formData.email,
-      paymentLabel: payment?.label ?? 'Pagamento simulado',
+      destination: {
+        city: formData.city,
+        state: formData.state,
+      },
+      now,
+      orderNumber,
+      paymentLabel: payment?.orderLabel ?? 'Não informado',
       shipping: selectedShipping,
       subtotal: cart.subtotal,
       warrantyTotal: cart.warrantyTotal,
       grandTotal,
     })
+    const persistedOrder = saveOrder(order)
 
-    setCompletedOrder(order)
+    setCompletedOrder(persistedOrder ?? order)
+    navigate(`/checkout?order=${encodeURIComponent(persistedOrder?.number ?? order.number)}`, {
+      replace: true,
+    })
     cart.clearCart()
   }
 
