@@ -31,12 +31,15 @@ Eden Androids é um e-commerce fictício que simula uma plataforma premium de ve
 - [x] Integração entre detalhes e carrinho, com controle de quantidade, limite de estoque, remoção individual e limpeza completa
 - [x] Garantias adicionais e cálculo de subtotal, garantias e total do pedido
 - [x] Contador dinâmico no Header e no drawer, página de carrinho vazia ou preenchida e resumo responsivo e acessível
-- [x] Checkout fictício com dados do cliente, endereço, opções de entrega e pagamento simulado
+- [x] Checkout com dados do cliente, endereço, opções de entrega e pagamento
+- [x] Parcelamento por cartão de 1x a 10x sem juros, recalculado pelo total do pedido
 - [x] Validação de e-mail, telefone com DDD e CPF com dígitos verificadores
 - [x] Consulta automática de CEP, preenchimento do endereço com ViaCEP e cálculo de frete após o endereço completo
-- [x] Confirmação da simulação com resumo financeiro e número de pedido
+- [x] Confirmação do pedido com resumo financeiro e número de identificação
+- [x] Histórico local dos 20 pedidos mais recentes
+- [x] Consulta do histórico em `/orders` e dos detalhes em `/orders/:orderNumber`
 - [x] Página acessível de rota não encontrada para endereços inválidos
-- [x] Testes automatizados para checkout, carrinho, validações, cálculos e rotas
+- [x] Testes automatizados para checkout, carrinho, pedidos, validações, cálculos e rotas
 - [x] Versão pública implantada na Vercel
 
 ## Catálogo e dados dos produtos
@@ -85,7 +88,7 @@ As opções de garantia são:
 - +12 meses, com acréscimo de 6%;
 - +24 meses, com acréscimo de 10%.
 
-Atualmente, o usuário pode explorar o catálogo, abrir os detalhes de um produto, adicionar androides ao carrinho, alterar quantidades, selecionar garantias e visualizar o resumo financeiro. O carrinho permanece salvo no navegador. No checkout, é possível preencher dados do cliente e da entrega, simular o frete, escolher uma forma de pagamento fictícia e gerar um número de pedido demonstrativo. Nenhuma cobrança ou entrega real é realizada.
+Atualmente, o usuário pode explorar o catálogo, abrir os detalhes de um produto, adicionar androides ao carrinho, alterar quantidades, selecionar garantias e visualizar o resumo financeiro. O carrinho permanece salvo no navegador. No checkout, é possível preencher dados do cliente e da entrega, calcular o frete, escolher uma forma de pagamento, parcelar o cartão de 1x a 10x sem juros e gerar um número de pedido. Os valores das parcelas acompanham o total atual do pedido. Nenhum pagamento real é processado.
 
 ## Organização do checkout
 
@@ -99,6 +102,14 @@ O checkout é organizado por responsabilidade dentro de `src/pages/Checkout`:
 - arquivos CSS separados para formulário, resumo e estados finais.
 
 As regras puras do carrinho ficam em `src/context/cartState.js`, enquanto o `CartContext.jsx` permanece responsável por integrar essas regras ao React e ao `localStorage`.
+
+## Histórico local de pedidos
+
+Ao concluir o checkout, a aplicação salva uma fotografia dos dados essenciais do pedido antes de limpar o carrinho. A leitura, validação, gravação e busca ficam centralizadas em `src/services/orderStorage.js`, usando a chave versionada `eden-androids:orders:v1`.
+
+O histórico mantém no máximo os 20 pedidos mais recentes e está disponível em `/orders`. Cada pedido pode ser aberto diretamente em `/orders/:orderNumber`, inclusive depois de recarregar a página. A confirmação também pode ser recuperada por sua URL enquanto o registro continuar salvo. Números repetidos não geram novos registros, e conteúdo ausente, corrompido ou de versão incompatível é ignorado sem interromper a aplicação.
+
+São persistidos somente número e data do pedido, itens, garantia, totais, entrega, forma genérica de pagamento e, quando disponível, cidade e estado. CPF, telefone, e-mail, dados de cartão e endereço completo não são armazenados. Os registros existem apenas no `localStorage` do navegador e dispositivo atuais; limpar os dados do site remove o histórico.
 
 ## Identidade visual
 
@@ -149,8 +160,10 @@ src/
 │   │   ├── hooks/
 │   │   ├── services/
 │   │   └── utils/
-│   └── NotFound/
+│   ├── NotFound/
+│   └── Orders/
 ├── routes/
+├── services/
 ├── test/
 ├── utils/
 ├── App.jsx
@@ -176,7 +189,7 @@ public/
 - [x] Filtros por categoria e tipo
 - [x] Responsividade para mobile, tablet e desktop
 - [x] Carrinho funcional
-- [x] Checkout fictício
+- [x] Checkout local
 
 ### MVP 2 — Dados e experiência local
 
@@ -184,6 +197,7 @@ public/
 - [x] Catálogo com 24 produtos, categorias, tipos e especialidades
 - [ ] Filtros avançados — parcialmente concluídos com busca e filtros dinâmicos atuais
 - [x] Persistência segura do carrinho com `localStorage`
+- [x] Persistência e histórico local de pedidos
 - [ ] Imagens para os demais produtos
 
 ### MVP 3 — Back-end
@@ -215,12 +229,13 @@ O projeto possui uma versão pública implantada na Vercel e recebe atualizaçõ
 
 ## Próximas etapas
 
-- [x] Checkout fictício funcional
+- [x] Checkout funcional
 - [x] Formulário de dados do cliente
 - [x] Endereço de entrega
 - [x] Cálculo de frete
-- [x] Forma de pagamento simulada
+- [x] Forma de pagamento
 - [x] Geração de número de pedido
+- [x] Histórico e detalhes locais de pedidos
 - [ ] Imagens para os demais androides
 - [ ] Favoritos
 - [ ] Login e cadastro
@@ -255,14 +270,15 @@ Para manter o Vitest observando alterações durante o desenvolvimento:
 npm run test:watch
 ```
 
-Os testes cobrem máscaras e validações, regras e persistência do carrinho, cálculos financeiros, integração simulada com o ViaCEP, estados essenciais do checkout e a rota de página não encontrada. As consultas de CEP são simuladas e não dependem de acesso à internet.
+Os testes cobrem máscaras e validações, regras e persistência do carrinho, cálculos financeiros, parcelamento de 1x a 10x, integração simulada com o ViaCEP, estados essenciais do checkout, armazenamento seguro dos pedidos, histórico, detalhes e rotas públicas. As consultas de CEP são simuladas e não dependem de acesso à internet.
 
 Para executar a validação completa do projeto:
 
 ```bash
 npm test
-npm run build
 npm run lint
+npm run build
+git diff --check
 ```
 
 ## Aviso legal
