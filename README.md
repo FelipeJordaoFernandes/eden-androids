@@ -24,8 +24,7 @@ Eden Androids é um e-commerce fictício que simula uma plataforma premium de ve
 - [x] Identidade visual e sistema de design baseados em variáveis CSS
 - [x] Google Fonts: Space Grotesk e Inter
 - [x] BrandLogo em SVG e favicon personalizado
-- [x] Imagens para Eden Home H-01, Eden Sentinel S-20 e Eden Luxury L-99
-- [x] Placeholders para produtos que ainda não possuem imagem
+- [x] Imagens próprias e otimizadas para os 24 produtos do catálogo
 - [x] Acessibilidade básica de navegação, controle de foco e uso por teclado
 - [x] Carrinho funcional com Context API, `useReducer`, hook `useCart` e persistência segura no `localStorage`
 - [x] Integração entre detalhes e carrinho, com controle de quantidade, limite de estoque, remoção individual e limpeza completa
