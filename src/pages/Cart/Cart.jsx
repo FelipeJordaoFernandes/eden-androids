@@ -143,8 +143,7 @@ function Cart() {
               Continuar para checkout
             </Link>
             <p className="cart-checkout-note">
-              O checkout é uma simulação em desenvolvimento. Nenhuma compra ou
-              cobrança será realizada.
+              Frete e forma de pagamento são definidos no checkout.
             </p>
             <button
               className="button button-ghost cart-clear-button"

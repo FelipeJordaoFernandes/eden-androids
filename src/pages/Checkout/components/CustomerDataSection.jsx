@@ -23,7 +23,7 @@ function CustomerDataSection({
         number="01"
         title="Dados do cliente"
         titleId="customer-data-title"
-        description="Usados somente durante esta demonstração."
+        description="Preencha seus dados para continuar."
       />
 
       <div className="checkout-fields">

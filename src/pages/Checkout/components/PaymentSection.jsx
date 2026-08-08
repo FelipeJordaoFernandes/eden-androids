@@ -7,9 +7,9 @@ function PaymentSection({ formData, grandTotal, onFieldChange }) {
     <section className="checkout-panel" aria-labelledby="payment-data-title">
       <CheckoutSectionHeading
         number="03"
-        title="Pagamento simulado"
+        title="Pagamento"
         titleId="payment-data-title"
-        description="Nenhum dado de pagamento será processado ou enviado."
+        description="Escolha a forma de pagamento para o pedido."
       />
 
       <fieldset className="checkout-option-group checkout-payment-options">
@@ -36,7 +36,7 @@ function PaymentSection({ formData, grandTotal, onFieldChange }) {
         <div className="checkout-card-fields">
           <div className="checkout-fields">
             <label className="checkout-field checkout-field-wide">
-              <span>Número do cartão fictício</span>
+              <span>Número do cartão</span>
               <input
                 type="text"
                 name="cardNumber"
