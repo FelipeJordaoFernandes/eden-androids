@@ -3,6 +3,10 @@ import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import useCart from '../../hooks/useCart.js'
+import {
+  loadOrders,
+  ORDER_STORAGE_KEY,
+} from '../../services/orderStorage.js'
 import Checkout from './Checkout.jsx'
 
 vi.mock('../../hooks/useCart.js', () => ({
@@ -15,9 +19,11 @@ const cartItem = {
   line: 'Habitat Series',
   modelCode: 'EN-H01',
   image: '/images/products/eden-home-h01.png',
+  price: 48900,
   quantity: 1,
   itemTotal: 48900,
   warrantyDetails: { label: 'Garantia padrão' },
+  warrantyCost: 0,
 }
 
 function createCart(overrides = {}) {
@@ -46,9 +52,9 @@ function createPostalCodeResponse(overrides = {}) {
   }
 }
 
-function renderCheckout() {
+function renderCheckout(initialEntries = ['/checkout']) {
   return render(
-    <MemoryRouter>
+    <MemoryRouter initialEntries={initialEntries}>
       <Checkout />
     </MemoryRouter>,
   )
@@ -72,7 +78,9 @@ async function fillAddressAndCalculateShipping(user) {
 
 describe('Checkout', () => {
   beforeEach(() => {
+    window.localStorage.clear()
     useCart.mockReset()
+    vi.unstubAllGlobals()
   })
 
   it('exibe o estado vazio quando não há itens', () => {
@@ -166,34 +174,68 @@ describe('Checkout', () => {
     expect(screen.getByLabelText('CEP')).toHaveAttribute('aria-invalid', 'true')
   })
 
-  it('conclui o fluxo e exibe a confirmação do pedido', async () => {
+  it('salva antes de limpar o carrinho e restaura a confirmação após recarregar', async () => {
     const user = userEvent.setup()
-    const cart = createCart()
+    const clearCart = vi.fn(() => {
+      expect(loadOrders()).toHaveLength(1)
+    })
+    const cart = createCart({ clearCart })
     useCart.mockReturnValue(cart)
     vi.stubGlobal(
       'fetch',
       vi.fn().mockResolvedValue(createPostalCodeResponse()),
     )
 
-    renderCheckout()
+    const view = renderCheckout()
 
     await fillValidCustomerData(user)
     await fillAddressAndCalculateShipping(user)
     await user.click(
       screen.getByRole('checkbox', {
-        name: /Confirmo que este é um checkout fictício/,
+        name: 'Confirmo que revisei os dados deste pedido.',
       }),
     )
-    await user.click(
-      screen.getByRole('button', { name: 'Concluir pedido simulado' }),
+    await user.dblClick(
+      screen.getByRole('button', { name: 'Concluir pedido' }),
     )
 
     const confirmation = await screen.findByRole('heading', {
-      name: 'Pedido simulado concluído.',
+      name: 'Pedido concluído.',
     })
     expect(confirmation).toHaveFocus()
-    expect(screen.getByText(/^EDN-\d{6}-\d{4}$/)).toBeVisible()
+    const orderNumber = screen.getByText(/^EDN-\d{6}-\d{4}$/).textContent
+
+    expect(orderNumber).toBeTruthy()
     expect(screen.getByText(/R\$\s*48\.900/)).toBeVisible()
-    expect(cart.clearCart).toHaveBeenCalledOnce()
+    expect(clearCart).toHaveBeenCalledOnce()
+    expect(loadOrders()).toHaveLength(1)
+    expect(loadOrders()[0]).toMatchObject({
+      number: orderNumber,
+      paymentMethod: 'Pix',
+      destination: { city: 'São Paulo', state: 'SP' },
+    })
+    expect(window.localStorage.getItem(ORDER_STORAGE_KEY)).not.toMatch(
+      /Ada Lovelace|ada@eden\.com\.br|529\.982\.247-25|\(11\) 91234-5678|Praça da Sé/,
+    )
+    expect(
+      screen.getByRole('link', { name: 'Ver detalhes do pedido' }),
+    ).toHaveAttribute('href', `/orders/${orderNumber}`)
+    expect(
+      screen.getByRole('link', { name: 'Ver histórico de pedidos' }),
+    ).toHaveAttribute('href', '/orders')
+    expect(
+      screen.getByRole('link', { name: 'Continuar comprando' }),
+    ).toHaveAttribute('href', '/catalog')
+
+    view.unmount()
+    useCart.mockReturnValue(
+      createCart({ cartItems: [], clearCart, totalItems: 0 }),
+    )
+    renderCheckout([`/checkout?order=${orderNumber}`])
+
+    expect(
+      screen.getByRole('heading', { name: 'Pedido concluído.' }),
+    ).toHaveFocus()
+    expect(screen.getByText(orderNumber)).toBeVisible()
   })
 })
