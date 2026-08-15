@@ -24,7 +24,7 @@ export const paymentOptions = Object.freeze([
   }),
   Object.freeze({
     id: 'card',
-    label: 'Cartão',
+    label: 'Cartão de crédito',
     orderLabel: 'Cartão de crédito',
     description: 'De 1x a 10x sem juros',
   }),
@@ -40,44 +40,10 @@ export const installmentOptions = Object.freeze(
   Array.from({ length: 10 }, (_, index) => index + 1),
 )
 
-export const requiredAddressFields = Object.freeze([
-  'postalCode',
-  'street',
-  'addressNumber',
-  'neighborhood',
-  'city',
-  'state',
-])
-
-export const customerFieldNames = Object.freeze([
-  'email',
-  'phone',
-  'document',
-])
-
-export const emptyAddressFields = Object.freeze({
-  street: '',
-  addressNumber: '',
-  addressComplement: '',
-  neighborhood: '',
-  city: '',
-  state: '',
-})
-
 export function createInitialCheckoutData() {
   return {
-    fullName: '',
-    email: '',
-    phone: '',
-    document: '',
-    postalCode: '',
-    ...emptyAddressFields,
     shippingId: '',
     paymentMethod: 'pix',
-    cardName: '',
-    cardNumber: '',
-    cardExpiry: '',
-    cardCvv: '',
     installments: '1',
     termsAccepted: false,
   }

@@ -13,6 +13,22 @@ const cardFormData = {
 }
 
 describe('PaymentSection', () => {
+  it('preserva Pix, Boleto e Cartão de crédito como modalidades', () => {
+    render(
+      <PaymentSection
+        formData={{ ...cardFormData, paymentMethod: 'pix' }}
+        grandTotal={10000}
+        onFieldChange={vi.fn()}
+      />,
+    )
+
+    expect(screen.getByRole('radio', { name: /Pix/ })).toBeChecked()
+    expect(screen.getByRole('radio', { name: /Boleto/ })).toBeVisible()
+    expect(
+      screen.getByRole('radio', { name: /Cartão de crédito/ }),
+    ).toBeVisible()
+  })
+
   it('oferece parcelas de 1x a 10x sem juros e atualiza os valores', () => {
     const { rerender } = render(
       <PaymentSection

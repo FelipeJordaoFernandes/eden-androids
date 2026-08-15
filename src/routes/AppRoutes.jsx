@@ -9,6 +9,10 @@ import Admin from '../pages/Admin/Admin.jsx'
 import NotFound from '../pages/NotFound/NotFound.jsx'
 import Orders from '../pages/Orders/Orders.jsx'
 import OrderDetails from '../pages/Orders/OrderDetails.jsx'
+import Login from '../pages/Auth/Login.jsx'
+import Register from '../pages/Auth/Register.jsx'
+import Account from '../pages/Account/Account.jsx'
+import ProtectedRoute from './ProtectedRoute.jsx'
 
 function AppRoutes() {
   return (
@@ -17,9 +21,26 @@ function AppRoutes() {
       <Route path="/catalog" element={<Catalog />} />
       <Route path="/product/:id" element={<ProductDetails />} />
       <Route path="/cart" element={<Cart />} />
-      <Route path="/checkout" element={<Checkout />} />
+      <Route
+        path="/checkout"
+        element={
+          <ProtectedRoute>
+            <Checkout />
+          </ProtectedRoute>
+        }
+      />
       <Route path="/orders" element={<Orders />} />
       <Route path="/orders/:orderNumber" element={<OrderDetails />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route
+        path="/account"
+        element={
+          <ProtectedRoute>
+            <Account />
+          </ProtectedRoute>
+        }
+      />
       <Route path="/about" element={<About />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="*" element={<NotFound />} />

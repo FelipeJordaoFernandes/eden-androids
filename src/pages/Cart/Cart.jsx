@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import CartItem from '../../components/CartItem/CartItem.jsx'
+import useAuth from '../../hooks/useAuth.js'
 import useCart from '../../hooks/useCart.js'
 import { formatCurrency } from '../../utils/formatCurrency.js'
 import './Cart.css'
@@ -8,6 +9,7 @@ import './Cart.css'
 function Cart() {
   const titleRef = useRef(null)
   const [statusMessage, setStatusMessage] = useState('')
+  const { isAuthenticated } = useAuth()
   const {
     cartItems,
     clearCart,
@@ -143,7 +145,9 @@ function Cart() {
               Continuar para checkout
             </Link>
             <p className="cart-checkout-note">
-              Frete e forma de pagamento são definidos no checkout.
+              {isAuthenticated
+                ? 'Frete e forma de pagamento são definidos no checkout.'
+                : 'Entre em uma conta local para continuar ao checkout.'}
             </p>
             <button
               className="button button-ghost cart-clear-button"

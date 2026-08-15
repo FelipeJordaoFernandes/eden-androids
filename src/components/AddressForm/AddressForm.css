@@ -1,0 +1,87 @@
+.address-form {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.address-form-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.address-form-field {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: var(--space-2);
+}
+
+.address-form-field-wide {
+  grid-column: 1 / -1;
+}
+
+.address-form-field label {
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.address-form-field label small {
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+  font-weight: 400;
+}
+
+.address-form-field input {
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-white-soft);
+  color: var(--color-text);
+  padding: 0.72rem 0.85rem;
+}
+
+.address-form-field input:focus {
+  border-color: var(--color-primary);
+  background: var(--color-surface-elevated);
+  box-shadow: var(--shadow-focus);
+}
+
+.address-form-field.has-error input {
+  border-color: var(--color-error);
+}
+
+.address-form-error,
+.address-form-save-error {
+  color: var(--color-error);
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+.address-form-notice {
+  max-width: none;
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+}
+
+.address-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+@media (max-width: 560px) {
+  .address-form-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .address-form-field-wide {
+    grid-column: auto;
+  }
+
+  .address-form-actions .button {
+    width: 100%;
+  }
+}

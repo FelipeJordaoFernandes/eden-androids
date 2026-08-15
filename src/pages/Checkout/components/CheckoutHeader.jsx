@@ -6,12 +6,11 @@ function CheckoutHeader({ titleRef }) {
         Prepare sua unidade Eden.
       </h1>
       <p>
-        Complete os dados abaixo para configurar a entrega e concluir o pedido.
+        Selecione entrega e pagamento para concluir o pedido com sua conta local.
       </p>
       <ol className="checkout-progress" aria-label="Etapas do checkout">
-        <li><span>01</span> Identificação</li>
-        <li><span>02</span> Entrega</li>
-        <li><span>03</span> Pagamento</li>
+        <li><span>01</span> Entrega</li>
+        <li><span>02</span> Pagamento</li>
       </ol>
     </header>
   )

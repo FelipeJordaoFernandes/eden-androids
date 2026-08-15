@@ -156,32 +156,35 @@ function Home() {
         <div className="featured-grid">
           {featuredModels.map((model) => (
             <article className="featured-card" key={model.id}>
-              <div className="featured-visual">
-                {model.image ? (
-                  <img
-                    src={model.image}
-                    alt={`${model.name} — ${model.type}`}
-                    width="1122"
-                    height="1402"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                ) : (
-                  <span aria-hidden="true">{model.modelCode}</span>
-                )}
-              </div>
-              <div className="featured-card-body">
-                <div className="featured-meta">
-                  <span className="badge">{model.category}</span>
-                  <span className="badge badge-neutral">{model.type}</span>
+              <Link
+                className="featured-card-link"
+                to={`/product/${model.id}`}
+                aria-label={`Ver detalhes de ${model.name}`}
+              >
+                <div className="featured-visual">
+                  {model.image ? (
+                    <img
+                      src={model.image}
+                      alt={`${model.name} — ${model.type}`}
+                      width="1122"
+                      height="1402"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <span aria-hidden="true">{model.modelCode}</span>
+                  )}
                 </div>
-                <h3>{model.name}</h3>
-                <strong>{formatCurrency(model.price)}</strong>
-                <p>{model.shortDescription}</p>
-                <Link className="inline-link details-link" to={`/product/${model.id}`}>
-                  Ver detalhes
-                </Link>
-              </div>
+                <div className="featured-card-body">
+                  <div className="featured-meta">
+                    <span className="badge">{model.category}</span>
+                    <span className="badge badge-neutral">{model.type}</span>
+                  </div>
+                  <h3>{model.name}</h3>
+                  <strong>{formatCurrency(model.price)}</strong>
+                  <p>{model.shortDescription}</p>
+                </div>
+              </Link>
             </article>
           ))}
         </div>

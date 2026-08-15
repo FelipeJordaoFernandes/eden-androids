@@ -1,24 +1,48 @@
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { saveOrder } from '../services/orderStorage.js'
+import AuthProvider from '../context/AuthContext.jsx'
+import {
+  clearSession,
+  registerAccount,
+} from '../services/authStorage.js'
 import AppRoutes from './AppRoutes.jsx'
 
+const cartActions = vi.hoisted(() => ({
+  clearCart: vi.fn(),
+}))
+
 vi.mock('../hooks/useCart.js', () => ({
-  default: vi.fn(() => ({ cartItems: [], totalItems: 0 })),
+  default: vi.fn(() => ({
+    cartItems: [],
+    clearCart: cartActions.clearCart,
+    subtotal: 0,
+    total: 0,
+    totalItems: 0,
+    warrantyTotal: 0,
+  })),
 }))
 
 describe('AppRoutes', () => {
   beforeEach(() => {
     window.localStorage.clear()
+    cartActions.clearCart.mockReset()
   })
 
-  it('exibe e focaliza a página não encontrada em uma rota inválida', () => {
-    render(
-      <MemoryRouter initialEntries={['/rota-inexistente']}>
-        <AppRoutes />
+  function renderRoutes(initialEntry) {
+    return render(
+      <MemoryRouter initialEntries={[initialEntry]}>
+        <AuthProvider>
+          <AppRoutes />
+        </AuthProvider>
       </MemoryRouter>,
     )
+  }
+
+  it('exibe e focaliza a página não encontrada em uma rota inválida', () => {
+    renderRoutes('/rota-inexistente')
 
     const heading = screen.getByRole('heading', {
       name: 'Página não encontrada.',
@@ -57,26 +81,62 @@ describe('AppRoutes', () => {
       paymentMethod: 'Pix',
     })
 
-    const historyView = render(
-      <MemoryRouter initialEntries={['/orders']}>
-        <AppRoutes />
-      </MemoryRouter>,
-    )
+    const historyView = renderRoutes('/orders')
 
     expect(
       screen.getByRole('heading', { name: 'Seus pedidos.' }),
     ).toBeVisible()
 
     historyView.unmount()
-    render(
-      <MemoryRouter initialEntries={['/orders/EDN-260808-1234']}>
-        <AppRoutes />
-      </MemoryRouter>,
-    )
+    renderRoutes('/orders/EDN-260808-1234')
 
     expect(
       screen.getByRole('heading', { name: 'Detalhes do pedido.' }),
     ).toBeVisible()
     expect(screen.getByText('EDN-260808-1234')).toBeVisible()
+  })
+
+  it('redireciona a área do cliente protegida para o login', () => {
+    renderRoutes('/account')
+
+    expect(
+      screen.getByRole('heading', { name: 'Entre na sua conta.' }),
+    ).toHaveFocus()
+  })
+
+  it('mantém o carrinho público, mas protege o checkout e restaura o destino após o login', async () => {
+    await registerAccount({
+      name: 'Felipe Jordão',
+      email: 'felipe@exemplo.com',
+      password: 'eden2026',
+    })
+    clearSession()
+    const user = userEvent.setup()
+
+    const cartView = renderRoutes('/cart')
+    expect(
+      screen.getByRole('heading', { name: 'Seu carrinho' }),
+    ).toBeVisible()
+    cartView.unmount()
+
+    const checkoutView = renderRoutes('/checkout')
+    expect(
+      screen.getByRole('heading', { name: 'Entre na sua conta.' }),
+    ).toHaveFocus()
+
+    checkoutView.unmount()
+    renderRoutes('/checkout')
+    expect(
+      screen.getByRole('heading', { name: 'Entre na sua conta.' }),
+    ).toHaveFocus()
+
+    await user.type(screen.getByLabelText('E-mail'), 'felipe@exemplo.com')
+    await user.type(screen.getByLabelText('Senha'), 'eden2026')
+    await user.click(screen.getByRole('button', { name: 'Entrar' }))
+
+    expect(
+      await screen.findByRole('heading', { name: 'Seu checkout está vazio.' }),
+    ).toHaveFocus()
+    expect(cartActions.clearCart).not.toHaveBeenCalled()
   })
 })

@@ -1,22 +1,33 @@
 import { useEffect, useRef, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import useCart from '../../hooks/useCart.js'
+import useAuth from '../../hooks/useAuth.js'
 import BrandLogo from '../BrandLogo/BrandLogo.jsx'
 import './Header.css'
 
-const navigationLinks = [
+const publicNavigationLinks = [
   { path: '/', label: 'Home' },
   { path: '/catalog', label: 'Catálogo' },
   { path: '/about', label: 'Sobre' },
-  { path: '/orders', label: 'Pedidos' },
-  { path: '/cart', label: 'Carrinho', isCart: true },
 ]
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const closeButtonRef = useRef(null)
   const menuButtonRef = useRef(null)
+  const location = useLocation()
   const { totalItems } = useCart()
+  const { isAuthenticated } = useAuth()
+  const navigationLinks = [
+    ...publicNavigationLinks,
+    ...(isAuthenticated ? [{ path: '/orders', label: 'Pedidos' }] : []),
+    {
+      path: isAuthenticated ? '/account' : '/login',
+      label: isAuthenticated ? 'Minha conta' : 'Entrar',
+      isAccount: true,
+    },
+    { path: '/cart', label: 'Carrinho', isCart: true },
+  ]
   const visibleCartCount = totalItems > 99 ? '99+' : String(totalItems)
   const cartAriaLabel = `Carrinho, ${totalItems} ${
     totalItems === 1 ? 'item' : 'itens'
@@ -131,9 +142,16 @@ function Header() {
               to={link.path}
               aria-label={link.isCart ? cartAriaLabel : undefined}
               className={({ isActive }) =>
-                `nav-link${isActive ? ' nav-link-active' : ''}${
+                `nav-link${
+                  isActive ||
+                  (link.isAccount &&
+                    !isAuthenticated &&
+                    location.pathname === '/register')
+                    ? ' nav-link-active'
+                    : ''
+                }${
                   link.isCart ? ' cart-link' : ''
-                }`
+                }${link.isAccount ? ' account-link' : ''}`
               }
             >
               <span>{link.label}</span>
@@ -202,9 +220,16 @@ function Header() {
               onClick={closeMenu}
               tabIndex={isMenuOpen ? 0 : -1}
               className={({ isActive }) =>
-                `nav-link${isActive ? ' nav-link-active' : ''}${
+                `nav-link${
+                  isActive ||
+                  (link.isAccount &&
+                    !isAuthenticated &&
+                    location.pathname === '/register')
+                    ? ' nav-link-active'
+                    : ''
+                }${
                   link.isCart ? ' cart-link' : ''
-                }`
+                }${link.isAccount ? ' account-link' : ''}`
               }
             >
               <span>{link.label}</span>

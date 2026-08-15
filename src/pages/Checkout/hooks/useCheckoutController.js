@@ -1,86 +1,65 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import useAuth from '../../../hooks/useAuth.js'
 import useCart from '../../../hooks/useCart.js'
 import {
   findOrderByNumber,
   loadOrders,
   saveOrder,
 } from '../../../services/orderStorage.js'
+import { isCustomerProfileComplete } from '../../../utils/customerData.js'
 import {
   createInitialCheckoutData,
-  customerFieldNames,
-  emptyAddressFields,
   paymentOptions,
-  requiredAddressFields,
   shippingOptions,
 } from '../checkoutConfig.js'
-import { fetchAddressByPostalCode } from '../services/postalCodeService.js'
-import {
-  formatCheckoutFieldValue,
-  onlyDigits,
-} from '../utils/checkoutMasks.js'
 import {
   calculateCheckoutTotal,
   createAvailableOrderNumber,
   createOrderSnapshot,
 } from '../utils/checkoutOrder.js'
-import {
-  getCustomerFieldError,
-  isRequiredAddressComplete,
-} from '../utils/checkoutValidation.js'
+
+function getDefaultItemId(items) {
+  return items.find((item) => item.isDefault)?.id ?? items[0]?.id ?? ''
+}
 
 function useCheckoutController() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const titleRef = useRef(null)
-  const postalCodeRef = useRef(null)
   const shippingButtonRef = useRef(null)
   const confirmationRef = useRef(null)
-  const postalLookupIdRef = useRef(0)
   const orderSubmissionRef = useRef(false)
   const [formData, setFormData] = useState(createInitialCheckoutData)
-  const [fieldErrors, setFieldErrors] = useState({
-    email: '',
-    phone: '',
-    document: '',
-  })
+  const { addAddress, addPaymentMethod, currentUser } = useAuth()
+  const [selectedAddressId, setSelectedAddressId] = useState(() =>
+    getDefaultItemId(currentUser.addresses),
+  )
+  const [selectedPaymentMethodId, setSelectedPaymentMethodId] = useState(() =>
+    getDefaultItemId(currentUser.paymentMethods),
+  )
   const [shippingCalculated, setShippingCalculated] = useState(false)
-  const [shippingError, setShippingError] = useState('')
   const [shippingCalculationError, setShippingCalculationError] = useState('')
-  const [postalCodeResolved, setPostalCodeResolved] = useState(false)
-  const [postalLookupNotice, setPostalLookupNotice] = useState('')
-  const [isPostalCodeLoading, setIsPostalCodeLoading] = useState(false)
+  const [paymentError, setPaymentError] = useState('')
+  const [termsError, setTermsError] = useState('')
   const [completedOrder, setCompletedOrder] = useState(() =>
     findOrderByNumber(searchParams.get('order')),
   )
   const cart = useCart()
 
+  const isProfileComplete = isCustomerProfileComplete(currentUser)
+  const selectedAddress =
+    currentUser.addresses.find((address) => address.id === selectedAddressId) ?? null
+  const selectedPaymentMethod =
+    currentUser.paymentMethods.find(
+      (method) => method.id === selectedPaymentMethodId,
+    ) ?? null
   const selectedShipping =
     shippingOptions.find((option) => option.id === formData.shippingId) ?? null
-  const isAddressComplete =
-    postalCodeResolved &&
-    isRequiredAddressComplete(formData, requiredAddressFields)
   const grandTotal = calculateCheckoutTotal(cart.total, selectedShipping)
 
   useLayoutEffect(() => {
-    const root = document.documentElement
-    const previousScrollBehavior = root.style.getPropertyValue('scroll-behavior')
-    const previousScrollPriority = root.style.getPropertyPriority('scroll-behavior')
-
-    root.style.setProperty('scroll-behavior', 'auto', 'important')
-    getComputedStyle(root).getPropertyValue('scroll-behavior')
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
-
-    if (previousScrollBehavior) {
-      root.style.setProperty(
-        'scroll-behavior',
-        previousScrollBehavior,
-        previousScrollPriority,
-      )
-    } else {
-      root.style.removeProperty('scroll-behavior')
-    }
-
     titleRef.current?.focus({ preventScroll: true })
   }, [])
 
@@ -93,113 +72,47 @@ function useCheckoutController() {
 
   function handleFieldChange(event) {
     const { checked, name, type, value } = event.currentTarget
-    const nextValue =
-      type === 'checkbox'
-        ? checked
-        : formatCheckoutFieldValue(name, value)
-    const shouldResetShipping = requiredAddressFields.includes(name)
 
     setFormData((currentData) => ({
       ...currentData,
-      [name]: nextValue,
-      ...(shouldResetShipping ? { shippingId: '' } : {}),
-      ...(name === 'postalCode' ? emptyAddressFields : {}),
+      [name]: type === 'checkbox' ? checked : value,
     }))
 
-    if (shouldResetShipping) {
-      setShippingCalculated(false)
-      setShippingCalculationError('')
-    }
-
-    if (Object.hasOwn(fieldErrors, name) && fieldErrors[name]) {
-      setFieldErrors((currentErrors) => ({
-        ...currentErrors,
-        [name]: getCustomerFieldError(name, nextValue),
-      }))
-    }
-
-    if (name === 'postalCode') {
-      postalLookupIdRef.current += 1
-      setPostalCodeResolved(false)
-      setPostalLookupNotice('')
-      setShippingError('')
-      setIsPostalCodeLoading(false)
-
-      if (onlyDigits(nextValue, 8).length === 8) {
-        void lookupPostalCode(nextValue)
-      }
-    }
+    if (name === 'paymentMethod') setPaymentError('')
+    if (name === 'termsAccepted') setTermsError('')
   }
 
-  function handleCustomerFieldBlur(event) {
-    const { name, value } = event.currentTarget
-
-    setFieldErrors((currentErrors) => ({
-      ...currentErrors,
-      [name]: getCustomerFieldError(name, value),
-    }))
-  }
-
-  function handleCustomerFieldInvalid(event) {
-    event.preventDefault()
-    handleCustomerFieldBlur(event)
-  }
-
-  async function lookupPostalCode(postalCodeValue) {
-    const lookupId = postalLookupIdRef.current + 1
-    postalLookupIdRef.current = lookupId
-    setIsPostalCodeLoading(true)
-    setPostalCodeResolved(false)
-    setPostalLookupNotice('')
+  function handleAddressChange(addressId) {
+    setSelectedAddressId(addressId)
     setShippingCalculated(false)
-    setShippingError('')
-
-    try {
-      const address = await fetchAddressByPostalCode(postalCodeValue)
-
-      if (postalLookupIdRef.current !== lookupId) return
-
-      if (!address) {
-        setShippingError('CEP não encontrado. Confira os números informados.')
-        return
-      }
-
-      setFormData((currentData) => ({
-        ...currentData,
-        ...address,
-        shippingId: '',
-      }))
-      setPostalCodeResolved(true)
-    } catch {
-      if (postalLookupIdRef.current !== lookupId) return
-
-      setPostalCodeResolved(true)
-      setPostalLookupNotice(
-        'Não foi possível consultar o CEP agora. Preencha o endereço manualmente.',
-      )
-    } finally {
-      if (postalLookupIdRef.current === lookupId) {
-        setIsPostalCodeLoading(false)
-      }
-    }
+    setShippingCalculationError('')
+    setFormData((currentData) => ({ ...currentData, shippingId: '' }))
   }
 
-  function handleCalculateShipping(event) {
-    const firstMissingField = requiredAddressFields.find(
-      (name) => !String(formData[name]).trim(),
-    )
+  function handleAddressSave(address) {
+    const result = addAddress(address)
 
-    if (!postalCodeResolved || firstMissingField) {
+    if (result.ok) handleAddressChange(result.value.id)
+
+    return result
+  }
+
+  function handlePaymentMethodSave(card) {
+    const result = addPaymentMethod(card)
+
+    if (result.ok) {
+      setSelectedPaymentMethodId(result.value.id)
+      setPaymentError('')
+    }
+
+    return result
+  }
+
+  function handleCalculateShipping() {
+    if (!selectedAddress) {
       setShippingCalculationError(
-        'Preencha todas as informações obrigatórias do endereço antes de calcular o frete.',
+        'Selecione ou cadastre um endereço antes de calcular o frete.',
       )
-
-      if (!postalCodeResolved || firstMissingField === 'postalCode') {
-        postalCodeRef.current?.focus()
-      } else {
-        event.currentTarget.form?.elements[firstMissingField]?.focus()
-      }
-
       return
     }
 
@@ -211,42 +124,28 @@ function useCheckoutController() {
     }))
   }
 
-  function handleSubmit(event) {
-    event.preventDefault()
-
-    const customerErrors = Object.fromEntries(
-      customerFieldNames.map((name) => [
-        name,
-        getCustomerFieldError(name, formData[name]),
-      ]),
-    )
-    const firstInvalidField = customerFieldNames.find(
-      (name) => customerErrors[name],
-    )
-
-    setFieldErrors(customerErrors)
-
-    if (firstInvalidField) {
-      event.currentTarget.elements[firstInvalidField]?.focus()
-      return
-    }
-
-    if (!shippingCalculated || !selectedShipping) {
+  function handleSubmit() {
+    if (!shippingCalculated || !selectedShipping || !selectedAddress) {
       setShippingCalculationError(
         'Calcule o frete e selecione uma opção de entrega para continuar.',
       )
+      shippingButtonRef.current?.focus()
+      return
+    }
 
-      if (postalCodeResolved) {
-        shippingButtonRef.current?.focus()
-      } else {
-        postalCodeRef.current?.focus()
-      }
+    if (formData.paymentMethod === 'card' && !selectedPaymentMethod) {
+      setPaymentError('Selecione ou cadastre um cartão fictício para continuar.')
+      document.getElementById('checkout-payment-card')?.focus()
+      return
+    }
 
+    if (!formData.termsAccepted) {
+      setTermsError('Confirme a revisão dos dados deste pedido.')
+      document.getElementById('checkout-terms')?.focus()
       return
     }
 
     if (orderSubmissionRef.current) return
-
     orderSubmissionRef.current = true
 
     const payment = paymentOptions.find(
@@ -260,8 +159,8 @@ function useCheckoutController() {
     const order = createOrderSnapshot({
       cartItems: cart.cartItems,
       destination: {
-        city: formData.city,
-        state: formData.state,
+        city: selectedAddress.city,
+        state: selectedAddress.state,
       },
       now,
       orderNumber,
@@ -274,9 +173,12 @@ function useCheckoutController() {
     const persistedOrder = saveOrder(order)
 
     setCompletedOrder(persistedOrder ?? order)
-    navigate(`/checkout?order=${encodeURIComponent(persistedOrder?.number ?? order.number)}`, {
-      replace: true,
-    })
+    navigate(
+      `/checkout?order=${encodeURIComponent(
+        persistedOrder?.number ?? order.number,
+      )}`,
+      { replace: true },
+    )
     cart.clearCart()
   }
 
@@ -284,24 +186,26 @@ function useCheckoutController() {
     cart,
     completedOrder,
     confirmationRef,
-    fieldErrors,
+    currentUser,
     formData,
     grandTotal,
+    handleAddressChange,
+    handleAddressSave,
     handleCalculateShipping,
-    handleCustomerFieldBlur,
-    handleCustomerFieldInvalid,
     handleFieldChange,
+    handlePaymentMethodSave,
     handleSubmit,
-    isAddressComplete,
-    isPostalCodeLoading,
-    postalCodeRef,
-    postalCodeResolved,
-    postalLookupNotice,
+    isProfileComplete,
+    paymentError,
+    selectedAddress,
+    selectedAddressId,
+    selectedPaymentMethodId,
     selectedShipping,
+    setSelectedPaymentMethodId,
     shippingButtonRef,
     shippingCalculated,
     shippingCalculationError,
-    shippingError,
+    termsError,
     titleRef,
   }
 }
