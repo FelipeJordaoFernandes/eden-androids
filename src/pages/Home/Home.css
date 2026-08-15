@@ -275,6 +275,13 @@
   transform: translateY(-3px);
 }
 
+.featured-card:focus-within {
+  border-color: var(--color-primary);
+  background-color: var(--color-surface-hover);
+  box-shadow: var(--shadow-focus), var(--shadow-md);
+  transform: translateY(-3px);
+}
+
 .category-card {
   min-height: 208px;
   padding: var(--space-5);
@@ -301,6 +308,19 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+}
+
+.featured-card-link {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-radius: inherit;
+  color: inherit;
+}
+
+.featured-card-link:focus-visible {
+  outline: 0;
 }
 
 .featured-visual {
@@ -376,11 +396,6 @@
   margin-bottom: var(--space-3);
   color: var(--color-primary);
   font-size: 1.24rem;
-}
-
-.details-link {
-  margin-top: auto;
-  padding-top: var(--space-5);
 }
 
 .institution-section {
