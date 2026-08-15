@@ -1,44 +1,29 @@
+import {
+  formatPostalCode,
+  formatState,
+} from '../../../utils/address.js'
+import {
+  formatDocument,
+  formatPhone,
+} from '../../../utils/customerData.js'
+import {
+  formatPaymentCardCvv,
+  formatPaymentCardExpiry,
+  formatPaymentCardNumber,
+} from '../../../utils/paymentCard.js'
+
+export { formatDocument, formatPhone, formatPostalCode, formatState }
+
 export function onlyDigits(value, maxLength) {
   return value.replace(/\D/g, '').slice(0, maxLength)
 }
 
-export function formatDocument(value) {
-  const digits = onlyDigits(value, 11)
-
-  return digits
-    .replace(/(\d{3})(\d)/, '$1.$2')
-    .replace(/(\d{3})(\d)/, '$1.$2')
-    .replace(/(\d{3})(\d{1,2})$/, '$1-$2')
-}
-
-export function formatPhone(value) {
-  const digits = onlyDigits(value, 11)
-
-  if (digits.length <= 10) {
-    return digits
-      .replace(/(\d{2})(\d)/, '($1) $2')
-      .replace(/(\d{4})(\d)/, '$1-$2')
-  }
-
-  return digits
-    .replace(/(\d{2})(\d)/, '($1) $2')
-    .replace(/(\d{5})(\d)/, '$1-$2')
-}
-
-export function formatPostalCode(value) {
-  return onlyDigits(value, 8).replace(/(\d{5})(\d)/, '$1-$2')
-}
-
 export function formatCardNumber(value) {
-  return onlyDigits(value, 16).replace(/(\d{4})(?=\d)/g, '$1 ')
+  return formatPaymentCardNumber(value)
 }
 
 export function formatCardExpiry(value) {
-  return onlyDigits(value, 4).replace(/(\d{2})(\d)/, '$1/$2')
-}
-
-export function formatState(value) {
-  return value.replace(/[^a-z]/gi, '').slice(0, 2).toUpperCase()
+  return formatPaymentCardExpiry(value)
 }
 
 const fieldFormatters = Object.freeze({
@@ -47,7 +32,7 @@ const fieldFormatters = Object.freeze({
   postalCode: formatPostalCode,
   cardNumber: formatCardNumber,
   cardExpiry: formatCardExpiry,
-  cardCvv: (value) => onlyDigits(value, 4),
+  cardCvv: formatPaymentCardCvv,
   state: formatState,
 })
 

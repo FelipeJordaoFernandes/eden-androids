@@ -18,6 +18,31 @@ export function CheckoutEmpty({ titleRef }) {
   )
 }
 
+export function CheckoutProfileRequired({ titleRef }) {
+  return (
+    <section className="checkout-page" aria-labelledby="checkout-title">
+      <div className="checkout-empty">
+        <span className="eyebrow checkout-eyebrow">Perfil necessário</span>
+        <h1 id="checkout-title" ref={titleRef} tabIndex={-1}>
+          Complete seus dados pessoais.
+        </h1>
+        <p>
+          Nome, e-mail, telefone e CPF precisam estar válidos na sua conta antes
+          de continuar para entrega e pagamento.
+        </p>
+        <div className="checkout-confirmation-actions">
+          <Link className="button button-primary" to="/account?tab=personal">
+            Completar dados pessoais
+          </Link>
+          <Link className="button button-secondary" to="/cart">
+            Voltar ao carrinho
+          </Link>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export function CheckoutConfirmation({ confirmationRef, order }) {
   return (
     <section className="checkout-page" aria-labelledby="checkout-confirmation-title">

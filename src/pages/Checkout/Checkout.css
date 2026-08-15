@@ -383,6 +383,60 @@
   padding-top: var(--space-5);
 }
 
+.checkout-address-options,
+.checkout-saved-card-options {
+  margin-bottom: var(--space-5);
+}
+
+.checkout-address-option {
+  grid-template-columns: 20px minmax(0, 1fr);
+}
+
+.checkout-inline-empty,
+.checkout-inline-editor {
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-white-soft);
+  padding: var(--space-5);
+}
+
+.checkout-inline-empty {
+  margin-bottom: var(--space-5);
+}
+
+.checkout-inline-empty h3,
+.checkout-inline-editor h3 {
+  margin-bottom: var(--space-2);
+}
+
+.checkout-inline-empty p {
+  font-size: 0.84rem;
+}
+
+.checkout-inline-editor {
+  margin-top: var(--space-5);
+}
+
+.checkout-inline-editor > .address-form,
+.checkout-inline-editor > .payment-card-form {
+  margin-top: var(--space-5);
+}
+
+.checkout-demo-warning {
+  max-width: none;
+  margin-bottom: var(--space-5);
+  border: 1px solid rgba(241, 197, 107, 0.35);
+  border-radius: var(--radius-sm);
+  background: rgba(241, 197, 107, 0.08);
+  color: var(--color-warning);
+  padding: var(--space-4);
+  font-size: 0.8rem;
+}
+
+.checkout-installments-field {
+  margin-top: var(--space-5);
+}
+
 @media (max-width: 1023px) {
   .checkout-layout {
     grid-template-columns: 1fr;

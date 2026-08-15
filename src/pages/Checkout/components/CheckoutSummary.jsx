@@ -6,10 +6,12 @@ function CheckoutSummary({
   formData,
   grandTotal,
   onFieldChange,
+  onSubmit,
   selectedShipping,
   subtotal,
   totalItems,
   warrantyTotal,
+  termsError,
 }) {
   return (
     <aside className="checkout-summary" aria-labelledby="checkout-summary-title">
@@ -67,6 +69,7 @@ function CheckoutSummary({
 
       <label className="checkout-terms">
         <input
+          id="checkout-terms"
           type="checkbox"
           name="termsAccepted"
           checked={formData.termsAccepted}
@@ -76,12 +79,14 @@ function CheckoutSummary({
         <span>Confirmo que revisei os dados deste pedido.</span>
       </label>
 
-      <button className="button button-primary checkout-submit" type="submit">
+      {termsError ? <p className="checkout-field-error" role="alert">{termsError}</p> : null}
+
+      <button className="button button-primary checkout-submit" type="button" onClick={onSubmit}>
         Concluir pedido
       </button>
       <p className="checkout-security-note">
         <span aria-hidden="true">◇</span>
-        Dados de cartão não são armazenados. Nenhum pagamento real é processado.
+        Número completo e CVV não são armazenados. Nenhum pagamento real é processado.
       </p>
     </aside>
   )
