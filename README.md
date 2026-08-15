@@ -15,6 +15,7 @@ Eden Androids é um e-commerce fictício que simula uma plataforma premium de ve
 - [x] Busca por nome, linha, categoria, tipo e especialidade
 - [x] Filtros dinâmicos por categoria e tipo
 - [x] Cards reutilizáveis para os produtos
+- [x] Cards inteiramente navegáveis por clique ou teclado no catálogo e nos destaques da Home
 - [x] Páginas de detalhes dinâmicas em `/product/:id`
 - [x] Estado específico para produto não encontrado
 - [x] Página de detalhes posicionada no topo a cada mudança de produto
@@ -30,13 +31,15 @@ Eden Androids é um e-commerce fictício que simula uma plataforma premium de ve
 - [x] Integração entre detalhes e carrinho, com controle de quantidade, limite de estoque, remoção individual e limpeza completa
 - [x] Garantias adicionais e cálculo de subtotal, garantias e total do pedido
 - [x] Contador dinâmico no Header e no drawer, página de carrinho vazia ou preenchida e resumo responsivo e acessível
-- [x] Checkout com dados do cliente, endereço, opções de entrega e pagamento
+- [x] Checkout protegido, integrado aos dados, endereços e cartões fictícios da conta local
 - [x] Parcelamento por cartão de 1x a 10x sem juros, recalculado pelo total do pedido
 - [x] Validação de e-mail, telefone com DDD e CPF com dígitos verificadores
 - [x] Consulta automática de CEP, preenchimento do endereço com ViaCEP e cálculo de frete após o endereço completo
 - [x] Confirmação do pedido com resumo financeiro e número de identificação
 - [x] Histórico local dos 20 pedidos mais recentes
 - [x] Consulta do histórico em `/orders` e dos detalhes em `/orders/:orderNumber`
+- [x] Cadastro e login locais em `/register` e `/login`, com sessão persistente
+- [x] Área protegida do cliente em `/account`, com abas de dados pessoais, endereços e formas de pagamento
 - [x] Página acessível de rota não encontrada para endereços inválidos
 - [x] Testes automatizados para checkout, carrinho, pedidos, validações, cálculos e rotas
 - [x] Versão pública implantada na Vercel
@@ -87,13 +90,13 @@ As opções de garantia são:
 - +12 meses, com acréscimo de 6%;
 - +24 meses, com acréscimo de 10%.
 
-Atualmente, o usuário pode explorar o catálogo, abrir os detalhes de um produto, adicionar androides ao carrinho, alterar quantidades, selecionar garantias e visualizar o resumo financeiro. O carrinho permanece salvo no navegador. No checkout, é possível preencher dados do cliente e da entrega, calcular o frete, escolher uma forma de pagamento, parcelar o cartão de 1x a 10x sem juros e gerar um número de pedido. Os valores das parcelas acompanham o total atual do pedido. Nenhum pagamento real é processado.
+Atualmente, o usuário pode explorar o catálogo, abrir os detalhes de um produto, adicionar androides ao carrinho, alterar quantidades, selecionar garantias e visualizar o resumo financeiro sem autenticação. O carrinho permanece salvo durante o redirecionamento para o login. Para abrir o checkout é necessária uma conta local; depois de entrar, a aplicação retorna automaticamente ao checkout solicitado. Endereço, frete e pagamento são escolhidos a partir dos dados vinculados à conta, com parcelamento por cartão de 1x a 10x sem juros. Os valores das parcelas acompanham o total atual do pedido. Nenhum pagamento real é processado.
 
 ## Organização do checkout
 
 O checkout é organizado por responsabilidade dentro de `src/pages/Checkout`:
 
-- `components/`: cabeçalho, dados do cliente, entrega, pagamento, resumo e estados vazio/confirmado;
+- `components/`: cabeçalho, entrega, pagamento, resumo e estados vazio, perfil incompleto e confirmado;
 - `hooks/`: controlador do fluxo, estado do formulário, foco e coordenação das etapas;
 - `services/`: integração isolada com o ViaCEP;
 - `utils/`: máscaras, validações e criação/cálculo do pedido;
@@ -109,6 +112,24 @@ Ao concluir o checkout, a aplicação salva uma fotografia dos dados essenciais 
 O histórico mantém no máximo os 20 pedidos mais recentes e está disponível em `/orders`. Cada pedido pode ser aberto diretamente em `/orders/:orderNumber`, inclusive depois de recarregar a página. A confirmação também pode ser recuperada por sua URL enquanto o registro continuar salvo. Números repetidos não geram novos registros, e conteúdo ausente, corrompido ou de versão incompatível é ignorado sem interromper a aplicação.
 
 São persistidos somente número e data do pedido, itens, garantia, totais, entrega, forma genérica de pagamento e, quando disponível, cidade e estado. CPF, telefone, e-mail, dados de cartão e endereço completo não são armazenados. Os registros existem apenas no `localStorage` do navegador e dispositivo atuais; limpar os dados do site remove o histórico.
+
+## Conta local e área do cliente
+
+O cadastro demonstrativo está disponível em `/register`, o login em `/login` e a área protegida do cliente em `/account`. O cadastro permanece enxuto e inicia a sessão automaticamente. O login preserva a página protegida que originou o redirecionamento, inclusive `/checkout`. A sessão é restaurada após recarregar a aplicação e pode ser encerrada pela área do cliente.
+
+As operações de cadastro, autenticação, sessão, perfil, endereços e cartões ficam centralizadas em `src/services/authStorage.js`. As contas utilizam a chave versionada `eden-androids:accounts:v2`, e a sessão armazena somente o identificador da conta em `eden-androids:session:v1`. Contas da versão anterior são migradas de maneira compatível: o endereço único existente passa a ser o endereço principal, sem alterar as credenciais PBKDF2 ou a sessão.
+
+A área do cliente separa o conteúdo em três abas acessíveis e responsivas:
+
+- **Dados pessoais:** nome, e-mail, telefone e CPF, com máscaras, validação, normalização e prevenção de e-mail duplicado;
+- **Endereços de entrega:** vários endereços nomeados, consulta automática ao ViaCEP, edição, exclusão e escolha do endereço principal;
+- **Formas de pagamento:** cartões exclusivamente fictícios, com validação e escolha do cartão principal.
+
+Cada conta local mantém isolados seus dados pessoais, endereços e cartões. Para cartões, são persistidos somente identificador, nome de identificação, nome impresso, bandeira genérica, quatro últimos dígitos, validade e indicação de principal. Número completo e CVV nunca são gravados. A senha também nunca é salva em texto puro: o navegador deriva um verificador com PBKDF2 e salt aleatório por meio da Web Crypto API.
+
+No checkout, o formulário repetido de dados pessoais foi removido. Um perfil incompleto direciona o usuário à aba correspondente; endereços e cartões podem ser selecionados ou cadastrados sem abandonar o fluxo. Pedidos não recebem CPF, telefone, e-mail, endereço completo, últimos dígitos, número ou CVV do cartão. O acesso “Pedidos” aparece na navegação apenas durante uma sessão local autenticada, embora o histórico permaneça armazenado e compartilhado no dispositivo conforme descrito acima.
+
+Essa solução existe exclusivamente para a experiência front-end local. Como não há servidor, banco de dados ou sessão autenticada pelo back-end, ela não oferece a segurança ou o isolamento necessários para uso em produção. Limpar os dados do site remove contas, sessão, carrinho e histórico mantidos no navegador.
 
 ## Identidade visual
 
@@ -129,6 +150,7 @@ A interface adota uma estética futurista premium, com foco em tecnologia avanç
 - React Router DOM
 - CSS
 - Web Storage API (`localStorage`)
+- Web Crypto API
 - Vitest, jsdom e React Testing Library
 - Google Fonts
 - Git e GitHub
@@ -139,18 +161,23 @@ A interface adota uma estética futurista premium, com foco em tecnologia avanç
 ```text
 src/
 ├── components/
+│   ├── AddressForm/
 │   ├── BrandLogo/
 │   ├── CartItem/
 │   ├── Footer/
 │   ├── Header/
+│   ├── PaymentCardForm/
 │   ├── ProductCard/
 │   └── ProductFilters/
 ├── context/
 │   ├── CartContext.jsx
+│   ├── AuthContext.jsx
+│   ├── authContext.js
 │   ├── cartContext.js
 │   ├── cartConfig.js
 │   └── cartState.js
 ├── hooks/
+│   ├── useAuth.js
 │   └── useCart.js
 ├── data/
 ├── pages/
@@ -159,6 +186,8 @@ src/
 │   │   ├── hooks/
 │   │   ├── services/
 │   │   └── utils/
+│   ├── Account/
+│   ├── Auth/
 │   ├── NotFound/
 │   └── Orders/
 ├── routes/
@@ -197,21 +226,23 @@ public/
 - [ ] Filtros avançados — parcialmente concluídos com busca e filtros dinâmicos atuais
 - [x] Persistência segura do carrinho com `localStorage`
 - [x] Persistência e histórico local de pedidos
-- [ ] Imagens para os demais produtos
+- [x] Cadastro, login e sessão locais demonstrativos
+- [x] Área local do cliente
+- [x] Imagens para todos os produtos
 
 ### MVP 3 — Back-end
 
 - [ ] Back-end — tecnologia ainda a definir entre as opções planejadas, como Node.js/Express ou Java Spring
 - [ ] API
 - [ ] Banco de dados — PostgreSQL permanece como opção planejada
-- [ ] Login e cadastro funcionais
+- [ ] Login e cadastro integrados ao back-end
 - [ ] Pedidos integrados
 - [ ] Painel administrativo funcional
 
 ### MVP 4 — Funcionalidades avançadas
 
 - [ ] Favoritos
-- [ ] Área do cliente
+- [x] Área local do cliente
 - [ ] Avaliações
 - [ ] Dashboard administrativo
 - [ ] Upload de imagens
@@ -229,16 +260,16 @@ O projeto possui uma versão pública implantada na Vercel e recebe atualizaçõ
 ## Próximas etapas
 
 - [x] Checkout funcional
-- [x] Formulário de dados do cliente
-- [x] Endereço de entrega
+- [x] Dados pessoais na conta local
+- [x] Múltiplos endereços de entrega
 - [x] Cálculo de frete
 - [x] Forma de pagamento
 - [x] Geração de número de pedido
 - [x] Histórico e detalhes locais de pedidos
-- [ ] Imagens para os demais androides
+- [x] Imagens para todos os androides
 - [ ] Favoritos
-- [ ] Login e cadastro
-- [ ] Área do cliente
+- [x] Login e cadastro locais
+- [x] Área local do cliente
 - [ ] Painel administrativo funcional
 - [ ] API
 - [ ] Back-end
@@ -269,7 +300,7 @@ Para manter o Vitest observando alterações durante o desenvolvimento:
 npm run test:watch
 ```
 
-Os testes cobrem máscaras e validações, regras e persistência do carrinho, cálculos financeiros, parcelamento de 1x a 10x, integração simulada com o ViaCEP, estados essenciais do checkout, armazenamento seguro dos pedidos, histórico, detalhes e rotas públicas. As consultas de CEP são simuladas e não dependem de acesso à internet.
+Os testes cobrem máscaras e validações, regras e persistência do carrinho, cálculos financeiros, parcelamento de 1x a 10x, integração simulada com o ViaCEP, estados essenciais do checkout, armazenamento seguro dos pedidos, histórico e detalhes. Também cobrem cadastro e login locais, retorno ao checkout, credenciais derivadas, sessão, atualização do perfil, múltiplos endereços, migração do endereço antigo, cartões sanitizados, isolamento entre contas, proteção de rotas, Header e cards navegáveis. As consultas de CEP são simuladas e não dependem de acesso à internet.
 
 Para executar a validação completa do projeto:
 
