@@ -23,12 +23,16 @@ function getDefaultItemId(items) {
   return items.find((item) => item.isDefault)?.id ?? items[0]?.id ?? ''
 }
 
+const ORDER_PERSISTENCE_ERROR =
+  'Não foi possível salvar o pedido neste dispositivo. Seu carrinho foi preservado. Verifique o armazenamento do navegador e tente novamente.'
+
 function useCheckoutController() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const titleRef = useRef(null)
   const shippingButtonRef = useRef(null)
   const confirmationRef = useRef(null)
+  const submissionErrorRef = useRef(null)
   const orderSubmissionRef = useRef(false)
   const [formData, setFormData] = useState(createInitialCheckoutData)
   const { addAddress, addPaymentMethod, currentUser } = useAuth()
@@ -42,6 +46,7 @@ function useCheckoutController() {
   const [shippingCalculationError, setShippingCalculationError] = useState('')
   const [paymentError, setPaymentError] = useState('')
   const [termsError, setTermsError] = useState('')
+  const [submissionError, setSubmissionError] = useState(null)
   const [completedOrder, setCompletedOrder] = useState(() =>
     findOrderByNumber(searchParams.get('order')),
   )
@@ -69,6 +74,12 @@ function useCheckoutController() {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
     confirmationRef.current?.focus({ preventScroll: true })
   }, [completedOrder])
+
+  useLayoutEffect(() => {
+    if (!submissionError) return
+
+    submissionErrorRef.current?.focus({ preventScroll: true })
+  }, [submissionError])
 
   function handleFieldChange(event) {
     const { checked, name, type, value } = event.currentTarget
@@ -147,6 +158,7 @@ function useCheckoutController() {
 
     if (orderSubmissionRef.current) return
     orderSubmissionRef.current = true
+    setSubmissionError(null)
 
     const payment = paymentOptions.find(
       (option) => option.id === formData.paymentMethod,
@@ -172,11 +184,15 @@ function useCheckoutController() {
     })
     const persistedOrder = saveOrder(order)
 
-    setCompletedOrder(persistedOrder ?? order)
+    if (!persistedOrder) {
+      orderSubmissionRef.current = false
+      setSubmissionError({ message: ORDER_PERSISTENCE_ERROR })
+      return
+    }
+
+    setCompletedOrder(persistedOrder)
     navigate(
-      `/checkout?order=${encodeURIComponent(
-        persistedOrder?.number ?? order.number,
-      )}`,
+      `/checkout?order=${encodeURIComponent(persistedOrder.number)}`,
       { replace: true },
     )
     cart.clearCart()
@@ -205,6 +221,8 @@ function useCheckoutController() {
     shippingButtonRef,
     shippingCalculated,
     shippingCalculationError,
+    submissionError: submissionError?.message ?? '',
+    submissionErrorRef,
     termsError,
     titleRef,
   }

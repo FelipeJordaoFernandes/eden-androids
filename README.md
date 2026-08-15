@@ -107,7 +107,7 @@ As regras puras do carrinho ficam em `src/context/cartState.js`, enquanto o `Car
 
 ## Histórico local de pedidos
 
-Ao concluir o checkout, a aplicação salva uma fotografia dos dados essenciais do pedido antes de limpar o carrinho. A leitura, validação, gravação e busca ficam centralizadas em `src/services/orderStorage.js`, usando a chave versionada `eden-androids:orders:v1`.
+Ao concluir o checkout, a aplicação salva uma fotografia dos dados essenciais do pedido antes de limpar o carrinho. A confirmação e a limpeza acontecem somente depois que essa gravação é concluída com sucesso. Se o armazenamento do navegador estiver indisponível ou sem espaço, o checkout informa a falha de maneira acessível e preserva carrinho, garantias, quantidades e formulário para uma nova tentativa. A leitura, validação, gravação e busca ficam centralizadas em `src/services/orderStorage.js`, usando a chave versionada `eden-androids:orders:v1`.
 
 O histórico mantém no máximo os 20 pedidos mais recentes e está disponível em `/orders`. Cada pedido pode ser aberto diretamente em `/orders/:orderNumber`, inclusive depois de recarregar a página. A confirmação também pode ser recuperada por sua URL enquanto o registro continuar salvo. Números repetidos não geram novos registros, e conteúdo ausente, corrompido ou de versão incompatível é ignorado sem interromper a aplicação.
 
@@ -255,7 +255,9 @@ public/
 
 - [x] Deploy na Vercel
 
-O projeto possui uma versão pública implantada na Vercel e recebe atualizações conforme a aplicação evolui.
+O projeto possui uma versão pública implantada na Vercel e recebe atualizações conforme a aplicação evolui. A configuração versionada em `vercel.json` entrega `index.html` como fallback depois da resolução dos arquivos estáticos, permitindo abrir e recarregar diretamente as rotas do React Router.
+
+A mesma configuração aplica uma Content Security Policy restritiva e cabeçalhos contra enquadramento, interpretação incorreta de conteúdo, vazamento excessivo de referência e uso de recursos do navegador que a Eden não necessita. A CSP mantém somente as origens externas utilizadas: `fonts.googleapis.com` e `fonts.gstatic.com` para as fontes da interface e `viacep.com.br` para a consulta de CEP. O HSTS continua sendo fornecido pela própria Vercel.
 
 ## Próximas etapas
 
@@ -300,7 +302,7 @@ Para manter o Vitest observando alterações durante o desenvolvimento:
 npm run test:watch
 ```
 
-Os testes cobrem máscaras e validações, regras e persistência do carrinho, cálculos financeiros, parcelamento de 1x a 10x, integração simulada com o ViaCEP, estados essenciais do checkout, armazenamento seguro dos pedidos, histórico e detalhes. Também cobrem cadastro e login locais, retorno ao checkout, credenciais derivadas, sessão, atualização do perfil, múltiplos endereços, migração do endereço antigo, cartões sanitizados, isolamento entre contas, proteção de rotas, Header e cards navegáveis. As consultas de CEP são simuladas e não dependem de acesso à internet.
+Os testes cobrem máscaras e validações, regras e persistência do carrinho, cálculos financeiros, parcelamento de 1x a 10x, integração simulada com o ViaCEP, estados essenciais do checkout, falha e repetição segura da gravação do pedido, histórico e detalhes. Também cobrem cadastro e login locais, retorno ao checkout, credenciais derivadas, sessão, atualização do perfil, múltiplos endereços, migração do endereço antigo, cartões sanitizados, isolamento entre contas, proteção de rotas, Header, cards navegáveis e diretivas essenciais da configuração da Vercel. As consultas de CEP são simuladas e não dependem de acesso à internet.
 
 Para executar a validação completa do projeto:
 
