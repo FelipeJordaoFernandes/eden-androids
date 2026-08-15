@@ -186,6 +186,22 @@
   accent-color: var(--color-primary);
 }
 
+.checkout-submission-error {
+  margin-bottom: var(--space-4);
+  border: 1px solid rgba(255, 124, 140, 0.4);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 124, 140, 0.08);
+  color: var(--color-error);
+  padding: var(--space-4);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.checkout-submission-error:focus {
+  box-shadow: var(--shadow-focus);
+  outline: none;
+}
+
 .checkout-submit {
   width: 100%;
 }

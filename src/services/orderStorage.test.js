@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import {
   findOrderByNumber,
   loadOrders,
@@ -53,6 +53,24 @@ describe('orderStorage', () => {
     expect(saveOrder(order)).toEqual(order)
     expect(loadOrders()).toEqual([order])
     expect(findOrderByNumber(order.number)).toEqual(order)
+  })
+
+  it('retorna null quando o armazenamento está indisponível', () => {
+    expect(loadOrders(null)).toEqual([])
+    expect(saveOrder(createOrder(), null)).toBeNull()
+  })
+
+  it('retorna null e não confirma a gravação quando a cota é excedida', () => {
+    const storage = {
+      getItem: vi.fn(() => null),
+      setItem: vi.fn(() => {
+        throw new DOMException('Quota excedida', 'QuotaExceededError')
+      }),
+    }
+
+    expect(saveOrder(createOrder(), storage)).toBeNull()
+    expect(storage.setItem).toHaveBeenCalledOnce()
+    expect(loadOrders(storage)).toEqual([])
   })
 
   it('ordena os pedidos do mais recente para o mais antigo', () => {

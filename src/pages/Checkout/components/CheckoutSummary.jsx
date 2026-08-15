@@ -8,6 +8,8 @@ function CheckoutSummary({
   onFieldChange,
   onSubmit,
   selectedShipping,
+  submissionError,
+  submissionErrorRef,
   subtotal,
   totalItems,
   warrantyTotal,
@@ -79,9 +81,32 @@ function CheckoutSummary({
         <span>Confirmo que revisei os dados deste pedido.</span>
       </label>
 
-      {termsError ? <p className="checkout-field-error" role="alert">{termsError}</p> : null}
+      {termsError ? (
+        <p className="checkout-field-error" role="alert">
+          {termsError}
+        </p>
+      ) : null}
 
-      <button className="button button-primary checkout-submit" type="button" onClick={onSubmit}>
+      {submissionError ? (
+        <p
+          id="checkout-submission-error"
+          ref={submissionErrorRef}
+          className="checkout-submission-error"
+          role="alert"
+          tabIndex={-1}
+        >
+          {submissionError}
+        </p>
+      ) : null}
+
+      <button
+        className="button button-primary checkout-submit"
+        type="button"
+        onClick={onSubmit}
+        aria-describedby={
+          submissionError ? 'checkout-submission-error' : undefined
+        }
+      >
         Concluir pedido
       </button>
       <p className="checkout-security-note">

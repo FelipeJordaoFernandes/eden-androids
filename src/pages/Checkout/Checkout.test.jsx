@@ -275,6 +275,88 @@ describe('Checkout', () => {
     expect(screen.getByText(orderNumber)).toBeVisible()
   })
 
+  it('preserva o checkout após falha de armazenamento e conclui uma única vez ao tentar novamente', async () => {
+    await prepareAccount()
+    const user = userEvent.setup()
+    const clearCart = vi.fn()
+    const itemWithWarranty = {
+      ...cartItem,
+      quantity: 2,
+      itemTotal: 107580,
+      warrantyDetails: { label: 'Garantia +24 meses' },
+      warrantyCost: 9780,
+    }
+    useCart.mockReturnValue(
+      createCart({
+        cartItems: [itemWithWarranty],
+        clearCart,
+        subtotal: 97800,
+        total: 107580,
+        totalItems: 2,
+        warrantyTotal: 9780,
+      }),
+    )
+
+    renderCheckout()
+
+    const originalSetItem = Storage.prototype.setItem
+    let rejectOrderWrites = true
+    const setItemSpy = vi
+      .spyOn(Storage.prototype, 'setItem')
+      .mockImplementation(function setItem(key, value) {
+        if (key === ORDER_STORAGE_KEY && rejectOrderWrites) {
+          throw new DOMException('Quota excedida', 'QuotaExceededError')
+        }
+
+        return originalSetItem.call(this, key, value)
+      })
+
+    await user.click(screen.getByRole('button', { name: 'Calcular frete' }))
+    await user.click(
+      screen.getByRole('checkbox', {
+        name: 'Confirmo que revisei os dados deste pedido.',
+      }),
+    )
+    await user.click(screen.getByRole('button', { name: 'Concluir pedido' }))
+
+    const error = screen.getByRole('alert')
+
+    expect(error).toHaveTextContent(
+      'Não foi possível salvar o pedido neste dispositivo. Seu carrinho foi preservado. Verifique o armazenamento do navegador e tente novamente.',
+    )
+    expect(error).toHaveFocus()
+    expect(
+      screen.getByRole('button', { name: 'Concluir pedido' }),
+    ).toHaveAttribute('aria-describedby', 'checkout-submission-error')
+    expect(
+      screen.queryByRole('heading', { name: 'Pedido concluído.' }),
+    ).not.toBeInTheDocument()
+    expect(clearCart).not.toHaveBeenCalled()
+    expect(loadOrders()).toEqual([])
+    expect(screen.getByText('Garantia +24 meses')).toBeVisible()
+    expect(screen.getByLabelText('2 unidades')).toBeVisible()
+    expect(
+      screen.getByRole('radio', { name: /Entrega agendada/ }),
+    ).toBeChecked()
+    expect(
+      screen.getByRole('checkbox', {
+        name: 'Confirmo que revisei os dados deste pedido.',
+      }),
+    ).toBeChecked()
+
+    rejectOrderWrites = false
+    await user.click(screen.getByRole('button', { name: 'Concluir pedido' }))
+
+    expect(
+      await screen.findByRole('heading', { name: 'Pedido concluído.' }),
+    ).toHaveFocus()
+    expect(clearCart).toHaveBeenCalledOnce()
+    expect(loadOrders()).toHaveLength(1)
+    expect(
+      setItemSpy.mock.calls.filter(([key]) => key === ORDER_STORAGE_KEY),
+    ).toHaveLength(2)
+  })
+
   it('seleciona o cartão sanitizado e mantém as dez parcelas no checkout', async () => {
     await prepareAccount({ withCard: true })
     const user = userEvent.setup()

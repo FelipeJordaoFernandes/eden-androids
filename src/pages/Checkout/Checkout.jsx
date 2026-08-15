@@ -69,6 +69,8 @@ function Checkout() {
           onFieldChange={checkout.handleFieldChange}
           onSubmit={checkout.handleSubmit}
           selectedShipping={checkout.selectedShipping}
+          submissionError={checkout.submissionError}
+          submissionErrorRef={checkout.submissionErrorRef}
           subtotal={checkout.cart.subtotal}
           totalItems={checkout.cart.totalItems}
           warrantyTotal={checkout.cart.warrantyTotal}
