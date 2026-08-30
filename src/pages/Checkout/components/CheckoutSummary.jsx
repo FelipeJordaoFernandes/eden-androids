@@ -28,7 +28,14 @@ function CheckoutSummary({
           <li key={item.id}>
             <div className={`checkout-summary-visual${item.image ? ' has-image' : ''}`}>
               {item.image ? (
-                <img src={item.image} alt="" width="1122" height="1402" />
+                <img
+                  src={item.image}
+                  alt=""
+                  width="1122"
+                  height="1402"
+                  loading="lazy"
+                  decoding="async"
+                />
               ) : (
                 <span aria-hidden="true">{item.modelCode}</span>
               )}

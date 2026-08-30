@@ -143,6 +143,7 @@ function ProductDetails() {
               width="1122"
               height="1402"
               decoding="async"
+              fetchPriority="high"
             />
           ) : (
             <>

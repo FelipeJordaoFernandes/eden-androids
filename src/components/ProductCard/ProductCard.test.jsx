@@ -47,4 +47,25 @@ describe('cards navegáveis de produto', () => {
       3,
     )
   })
+
+  it('prioriza somente as imagens marcadas para carregamento imediato', () => {
+    const product = products[2]
+    const view = render(
+      <MemoryRouter>
+        <ProductCard product={product} imagePriority />
+      </MemoryRouter>,
+    )
+
+    expect(screen.getByRole('img')).toHaveAttribute('loading', 'eager')
+    expect(screen.getByRole('img')).toHaveAttribute('fetchpriority', 'high')
+
+    view.rerender(
+      <MemoryRouter>
+        <ProductCard product={product} />
+      </MemoryRouter>,
+    )
+
+    expect(screen.getByRole('img')).toHaveAttribute('loading', 'lazy')
+    expect(screen.getByRole('img')).toHaveAttribute('fetchpriority', 'auto')
+  })
 })

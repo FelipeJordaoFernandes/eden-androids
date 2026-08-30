@@ -45,6 +45,12 @@ function Catalog() {
     setSelectedType('all')
   }
 
+  const resultLabel = `${filteredProducts.length} ${
+    filteredProducts.length === 1
+      ? 'produto encontrado'
+      : 'produtos encontrados'
+  }`
+
   return (
     <section className="catalog-page">
       <div className="catalog-header">
@@ -68,7 +74,13 @@ function Catalog() {
         onTypeChange={setSelectedType}
       />
 
-      <div className="catalog-summary">
+      <div
+        className="catalog-summary"
+        role="status"
+        aria-label={resultLabel}
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <strong>{filteredProducts.length}</strong>
         <span>
           {filteredProducts.length === 1
@@ -78,9 +90,16 @@ function Catalog() {
       </div>
 
       {filteredProducts.length > 0 ? (
-        <div className="catalog-grid">
-          {filteredProducts.map((product) => (
-            <ProductCard product={product} key={product.id} />
+        <div className="catalog-grid" aria-labelledby="catalog-results-title">
+          <h2 id="catalog-results-title" className="visually-hidden">
+            Resultados do catálogo
+          </h2>
+          {filteredProducts.map((product, index) => (
+            <ProductCard
+              product={product}
+              imagePriority={index < 8}
+              key={product.id}
+            />
           ))}
         </div>
       ) : (
