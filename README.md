@@ -41,6 +41,7 @@ Eden Androids é um e-commerce fictício que simula uma plataforma premium de ve
 - [x] Cadastro e login locais em `/register` e `/login`, com sessão persistente
 - [x] Área protegida do cliente em `/account`, com abas de dados pessoais, endereços e formas de pagamento
 - [x] Página acessível de rota não encontrada para endereços inválidos
+- [x] Página Sobre com história fictícia, fundador, linha do tempo, valores e imagens institucionais responsivas
 - [x] Testes automatizados para checkout, carrinho, pedidos, validações, cálculos e rotas
 - [x] Versão pública implantada na Vercel
 
@@ -187,6 +188,7 @@ src/
 │   │   ├── services/
 │   │   └── utils/
 │   ├── Account/
+│   ├── About/
 │   ├── Auth/
 │   ├── NotFound/
 │   └── Orders/
@@ -200,6 +202,7 @@ src/
 
 public/
 ├── images/
+│   ├── about/
 │   ├── backgrounds/
 │   ├── products/
 │   └── brand/
