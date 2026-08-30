@@ -74,7 +74,14 @@ function OrderDetails() {
           <ul className="order-detail-items">
             {order.items.map((item) => (
               <li key={item.id}>
-                <img src={item.image} alt={`${item.name} — ${item.modelCode}`} />
+                <img
+                  src={item.image}
+                  alt={`${item.name} — ${item.modelCode}`}
+                  width="1122"
+                  height="1402"
+                  loading="lazy"
+                  decoding="async"
+                />
                 <div className="order-detail-item-copy">
                   <span>{item.modelCode}</span>
                   <h3>{item.name}</h3>

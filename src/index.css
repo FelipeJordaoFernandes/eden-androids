@@ -195,6 +195,36 @@ p {
   padding-inline: clamp(var(--space-4), 4vw, var(--space-6));
 }
 
+.route-loading {
+  min-height: 45vh;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--space-3);
+  color: var(--color-text-secondary);
+}
+
+.route-loading-indicator {
+  width: 2rem;
+  aspect-ratio: 1;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: route-loading-spin 700ms linear infinite;
+}
+
+@keyframes route-loading-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-loading-indicator {
+    animation: none;
+  }
+}
+
 .app-main {
   flex: 1;
   padding-top: clamp(var(--space-12), 6vw, 4.5rem);

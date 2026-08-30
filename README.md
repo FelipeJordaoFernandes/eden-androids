@@ -26,6 +26,8 @@ Eden Androids é um e-commerce fictício que simula uma plataforma premium de ve
 - [x] Google Fonts: Space Grotesk e Inter
 - [x] BrandLogo em SVG e favicon personalizado
 - [x] Imagens próprias e otimizadas para os 24 produtos do catálogo
+- [x] Carregamento progressivo das imagens, com prioridade para os primeiros resultados visíveis
+- [x] Divisão do JavaScript por rota e pré-carregamento por intenção de navegação
 - [x] Acessibilidade básica de navegação, controle de foco e uso por teclado
 - [x] Carrinho funcional com Context API, `useReducer`, hook `useCart` e persistência segura no `localStorage`
 - [x] Integração entre detalhes e carrinho, com controle de quantidade, limite de estoque, remoção individual e limpeza completa
@@ -42,7 +44,10 @@ Eden Androids é um e-commerce fictício que simula uma plataforma premium de ve
 - [x] Área protegida do cliente em `/account`, com abas de dados pessoais, endereços e formas de pagamento
 - [x] Página acessível de rota não encontrada para endereços inválidos
 - [x] Página Sobre com história fictícia, fundador, linha do tempo, valores e imagens institucionais responsivas
+- [x] Títulos, descrições, canonical e metadados sociais específicos por rota e produto
+- [x] `robots.txt` e sitemap com as páginas públicas e os 24 produtos
 - [x] Testes automatizados para checkout, carrinho, pedidos, validações, cálculos e rotas
+- [x] Cobertura automatizada, auditoria de acessibilidade, testes E2E em desktop e celular e CI no GitHub
 - [x] Versão pública implantada na Vercel
 
 ## Catálogo e dados dos produtos
@@ -76,6 +81,8 @@ Os campos `category`, `type`, `specialty` e `modelCode` permitem organizar e pes
 - `type`: tipo ou subcategoria, como Babá, Porteiro ou Assistente executivo;
 - `specialty`: descrição da especialidade operacional do androide;
 - `modelCode`: código fictício do modelo.
+
+As imagens mantêm dimensões declaradas para evitar deslocamentos de layout. No catálogo, os oito primeiros resultados recebem carregamento imediato e prioridade de rede; os demais continuam usando carregamento progressivo conforme se aproximam da área visível. Os cards fora da tela também adiam seu trabalho de renderização. Essa estratégia mantém a primeira navegação responsiva sem solicitar antecipadamente as 24 imagens.
 
 ## Carrinho e persistência
 
@@ -118,7 +125,7 @@ São persistidos somente número e data do pedido, itens, garantia, totais, entr
 
 O cadastro demonstrativo está disponível em `/register`, o login em `/login` e a área protegida do cliente em `/account`. O cadastro permanece enxuto e inicia a sessão automaticamente. O login preserva a página protegida que originou o redirecionamento, inclusive `/checkout`. A sessão é restaurada após recarregar a aplicação e pode ser encerrada pela área do cliente.
 
-As operações de cadastro, autenticação, sessão, perfil, endereços e cartões ficam centralizadas em `src/services/authStorage.js`. As contas utilizam a chave versionada `eden-androids:accounts:v2`, e a sessão armazena somente o identificador da conta em `eden-androids:session:v1`. Contas da versão anterior são migradas de maneira compatível: o endereço único existente passa a ser o endereço principal, sem alterar as credenciais PBKDF2 ou a sessão.
+`src/services/authStorage.js` permanece como a fachada pública das operações de cadastro, autenticação, sessão, perfil, endereços e cartões. Configuração, criptografia e acesso versionado ao armazenamento ficam separados em `src/services/auth/`, preservando a mesma API e os mesmos formatos locais. As contas utilizam a chave versionada `eden-androids:accounts:v2`, e a sessão armazena somente o identificador da conta em `eden-androids:session:v1`. Contas da versão anterior são migradas de maneira compatível: o endereço único existente passa a ser o endereço principal, sem alterar as credenciais PBKDF2 ou a sessão.
 
 A área do cliente separa o conteúdo em três abas acessíveis e responsivas:
 
@@ -153,8 +160,9 @@ A interface adota uma estética futurista premium, com foco em tecnologia avanç
 - Web Storage API (`localStorage`)
 - Web Crypto API
 - Vitest, jsdom e React Testing Library
+- Playwright, axe-core e cobertura V8
 - Google Fonts
-- Git e GitHub
+- Git, GitHub e GitHub Actions
 - Vercel
 
 ## Estrutura de pastas
@@ -193,7 +201,13 @@ src/
 │   ├── NotFound/
 │   └── Orders/
 ├── routes/
+│   ├── AppRoutes.jsx
+│   ├── RouteMetadata.jsx
+│   └── routeLoaders.js
 ├── services/
+│   ├── auth/
+│   ├── authStorage.js
+│   └── orderStorage.js
 ├── test/
 ├── utils/
 ├── App.jsx
@@ -206,8 +220,24 @@ public/
 │   ├── backgrounds/
 │   ├── products/
 │   └── brand/
-└── favicon.svg
+├── favicon.svg
+├── robots.txt
+└── sitemap.xml
+
+e2e/
+└── frontend.spec.js
+
+.github/workflows/
+└── quality.yml
 ```
+
+## Performance, SEO e qualidade contínua
+
+A Home permanece no pacote inicial, enquanto catálogo, detalhes, carrinho, checkout, autenticação, conta, pedidos, Sobre, Admin e página 404 são carregados em arquivos separados quando necessários. Links principais antecipam o carregamento da próxima rota ao receber hover ou foco, reduzindo a espera percebida sem ampliar o JavaScript inicial de todas as visitas.
+
+As páginas públicas possuem metadados próprios de título, descrição, canonical, Open Graph e Twitter Cards. Produtos recebem metadados baseados no catálogo. Carrinho, checkout, autenticação, conta, pedidos, Admin, produtos inexistentes e rotas inválidas recebem `noindex`; `public/robots.txt` orienta os rastreadores e `public/sitemap.xml` lista Home, Catálogo, Sobre e os 24 produtos.
+
+O workflow `.github/workflows/quality.yml` executa testes, cobertura, lint, build e E2E em pull requests destinados à `main` e após atualizações da própria `main`. A página Admin continua propositalmente provisória e fora da navegação pública: sua implementação funcional pertence à futura etapa de back-end, API e banco de dados.
 
 ## Roadmap
 
@@ -305,14 +335,31 @@ Para manter o Vitest observando alterações durante o desenvolvimento:
 npm run test:watch
 ```
 
-Os testes cobrem máscaras e validações, regras e persistência do carrinho, cálculos financeiros, parcelamento de 1x a 10x, integração simulada com o ViaCEP, estados essenciais do checkout, falha e repetição segura da gravação do pedido, histórico e detalhes. Também cobrem cadastro e login locais, retorno ao checkout, credenciais derivadas, sessão, atualização do perfil, múltiplos endereços, migração do endereço antigo, cartões sanitizados, isolamento entre contas, proteção de rotas, Header, cards navegáveis e diretivas essenciais da configuração da Vercel. As consultas de CEP são simuladas e não dependem de acesso à internet.
+Para gerar o relatório de cobertura em `coverage/`:
+
+```bash
+npm run test:coverage
+```
+
+Os limites mínimos atuais são 75% para statements e funções, 68% para branches e 80% para linhas.
+
+Os testes de interface completos usam Playwright em Chromium, com projetos separados para desktop e celular. Na primeira execução local, instale o navegador gerenciado pelo Playwright e depois rode a suíte:
+
+```bash
+npx playwright install chromium
+npm run test:e2e
+```
+
+Os testes cobrem máscaras e validações, regras e persistência do carrinho, cálculos financeiros, parcelamento de 1x a 10x, integração simulada com o ViaCEP, estados essenciais do checkout, falha e repetição segura da gravação do pedido, histórico e detalhes. Também cobrem cadastro e login locais, retorno ao checkout, credenciais derivadas, sessão, atualização do perfil, múltiplos endereços, migração do endereço antigo, cartões sanitizados, isolamento entre contas, proteção de rotas, Header, filtros do catálogo, detalhes, prioridade das imagens, cards navegáveis, metadados de SEO, arquivos de rastreamento e diretivas essenciais da configuração da Vercel. As consultas de CEP são simuladas e não dependem de acesso à internet. A suíte E2E valida rotas públicas, as 24 imagens, overflow, console e acessibilidade automática em desktop e celular.
 
 Para executar a validação completa do projeto:
 
 ```bash
 npm test
+npm run test:coverage
 npm run lint
 npm run build
+npm run test:e2e
 git diff --check
 ```
 

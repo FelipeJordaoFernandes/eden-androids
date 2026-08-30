@@ -41,10 +41,10 @@ describe('AppRoutes', () => {
     )
   }
 
-  it('exibe e focaliza a página não encontrada em uma rota inválida', () => {
+  it('exibe e focaliza a página não encontrada em uma rota inválida', async () => {
     renderRoutes('/rota-inexistente')
 
-    const heading = screen.getByRole('heading', {
+    const heading = await screen.findByRole('heading', {
       name: 'Página não encontrada.',
     })
 
@@ -55,7 +55,7 @@ describe('AppRoutes', () => {
     )
   })
 
-  it('disponibiliza o histórico e os detalhes por suas rotas públicas', () => {
+  it('disponibiliza o histórico e os detalhes por suas rotas públicas', async () => {
     saveOrder({
       number: 'EDN-260808-1234',
       createdAt: '2026-08-08T12:30:00.000Z',
@@ -84,23 +84,23 @@ describe('AppRoutes', () => {
     const historyView = renderRoutes('/orders')
 
     expect(
-      screen.getByRole('heading', { name: 'Seus pedidos.' }),
+      await screen.findByRole('heading', { name: 'Seus pedidos.' }),
     ).toBeVisible()
 
     historyView.unmount()
     renderRoutes('/orders/EDN-260808-1234')
 
     expect(
-      screen.getByRole('heading', { name: 'Detalhes do pedido.' }),
+      await screen.findByRole('heading', { name: 'Detalhes do pedido.' }),
     ).toBeVisible()
     expect(screen.getByText('EDN-260808-1234')).toBeVisible()
   })
 
-  it('redireciona a área do cliente protegida para o login', () => {
+  it('redireciona a área do cliente protegida para o login', async () => {
     renderRoutes('/account')
 
     expect(
-      screen.getByRole('heading', { name: 'Entre na sua conta.' }),
+      await screen.findByRole('heading', { name: 'Entre na sua conta.' }),
     ).toHaveFocus()
   })
 
@@ -115,19 +115,19 @@ describe('AppRoutes', () => {
 
     const cartView = renderRoutes('/cart')
     expect(
-      screen.getByRole('heading', { name: 'Seu carrinho' }),
+      await screen.findByRole('heading', { name: 'Seu carrinho' }),
     ).toBeVisible()
     cartView.unmount()
 
     const checkoutView = renderRoutes('/checkout')
     expect(
-      screen.getByRole('heading', { name: 'Entre na sua conta.' }),
+      await screen.findByRole('heading', { name: 'Entre na sua conta.' }),
     ).toHaveFocus()
 
     checkoutView.unmount()
     renderRoutes('/checkout')
     expect(
-      screen.getByRole('heading', { name: 'Entre na sua conta.' }),
+      await screen.findByRole('heading', { name: 'Entre na sua conta.' }),
     ).toHaveFocus()
 
     await user.type(screen.getByLabelText('E-mail'), 'felipe@exemplo.com')

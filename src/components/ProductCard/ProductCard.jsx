@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { formatCurrency } from '../../utils/formatCurrency.js'
 import './ProductCard.css'
 
-function ProductCard({ product }) {
+function ProductCard({ product, imagePriority = false }) {
   return (
     <article className="product-card">
       <Link
@@ -21,8 +21,9 @@ function ProductCard({ product }) {
               alt={`${product.name} — ${product.type}`}
               width="1122"
               height="1402"
-              loading="lazy"
+              loading={imagePriority ? 'eager' : 'lazy'}
               decoding="async"
+              fetchPriority={imagePriority ? 'high' : 'auto'}
             />
           ) : (
             <span aria-hidden="true">{product.modelCode}</span>

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import useCart from '../../hooks/useCart.js'
 import useAuth from '../../hooks/useAuth.js'
+import { preloadRoute } from '../../routes/routeLoaders.js'
 import BrandLogo from '../BrandLogo/BrandLogo.jsx'
 import './Header.css'
 
@@ -141,6 +142,8 @@ function Header() {
               key={link.path}
               to={link.path}
               aria-label={link.isCart ? cartAriaLabel : undefined}
+              onFocus={() => preloadRoute(link.path)}
+              onPointerEnter={() => preloadRoute(link.path)}
               className={({ isActive }) =>
                 `nav-link${
                   isActive ||
@@ -217,6 +220,8 @@ function Header() {
               key={link.path}
               to={link.path}
               aria-label={link.isCart ? cartAriaLabel : undefined}
+              onFocus={() => preloadRoute(link.path)}
+              onPointerEnter={() => preloadRoute(link.path)}
               onClick={closeMenu}
               tabIndex={isMenuOpen ? 0 : -1}
               className={({ isActive }) =>

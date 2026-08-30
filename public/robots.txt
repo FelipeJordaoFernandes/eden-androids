@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /account
+Disallow: /admin
+Disallow: /cart
+Disallow: /checkout
+Disallow: /login
+Disallow: /orders
+Disallow: /register
+
+Sitemap: https://eden-androids.vercel.app/sitemap.xml
