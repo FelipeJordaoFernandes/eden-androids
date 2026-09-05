@@ -256,7 +256,7 @@ O workflow `.github/workflows/quality.yml` executa testes, cobertura, lint, buil
 
 - [x] Produtos mantidos em arquivo JavaScript local
 - [x] Catálogo com 24 produtos, categorias, tipos e especialidades
-- [ ] Filtros avançados — parcialmente concluídos com busca e filtros dinâmicos atuais
+- [x] Busca e filtros do catálogo — pesquisa por nome e filtros por categoria e tipo atendem ao escopo atual
 - [x] Persistência segura do carrinho com `localStorage`
 - [x] Persistência e histórico local de pedidos
 - [x] Cadastro, login e sessão locais demonstrativos
